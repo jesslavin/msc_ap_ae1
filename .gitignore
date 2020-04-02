@@ -23,6 +23,8 @@
 hs_err_pid*
 
 
+/out
+/.idea
 *.iml
 *.DS_Store
-/out
+*.xml
