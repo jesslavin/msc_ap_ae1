@@ -1,16 +1,16 @@
 import javax.swing.JFrame;
 
-public class Server {
+public class XServer {
 
 	public static void main(String[] args) {
 
 		// creates a new server window
-		ServerView server = new ServerView();
+		XServerView server = new XServerView();
 
-		// sets the size and visibly of server window
-		server.setLocation(20, 20);
+		// sets the size, location and visibly of server window
+		server.setLocation(0, 0);
 		server.setTitle("Game Server");
-		server.setSize(500,250);
+		server.setSize(300,200);
 		server.setVisible(true);
 
 		// stops server running when window is closed

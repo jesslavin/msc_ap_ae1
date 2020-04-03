@@ -3,7 +3,7 @@ import javax.swing.*;
 import java.io.DataOutputStream;
 import java.net.*;
 
-public class ServerView extends JFrame {
+public class XServerView extends JFrame {
 	
 	// create frame components
 	private JPanel contentPanel;
@@ -13,7 +13,7 @@ public class ServerView extends JFrame {
 	private ServerSocket socket;
 
 	// formats elements and adds them to server window
-	public ServerView(){
+	public XServerView(){
 		contentPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		textArea = new JTextArea();
 		contentPanel.setBackground(Color.BLACK);
@@ -26,7 +26,7 @@ public class ServerView extends JFrame {
 	// establishes a connection and waits for clients to join
 	public void start(){
 		try {
-			FetchProperties properties = FetchProperties.fetchInstance();
+			XFetchProperties properties = XFetchProperties.fetchInstance();
 			int port = properties.fetchPort();
 			
 			// creates a new server socket
@@ -39,16 +39,21 @@ public class ServerView extends JFrame {
 				Socket clientOne = socket.accept();
 				textArea.append("First player joined successfully at ");
 				textArea.append(clientOne.getInetAddress().getHostAddress() + "\n");
-				textArea.append("Waiting for second player... " + "\n");
+				textArea.append("Waiting for second player... \n");
 
 				// waits for second client to join server
 				Socket clientTwo = socket.accept();
 				textArea.append("Second player joined successfully at ");
 				textArea.append(clientTwo.getInetAddress().getHostAddress() +"\n");
+				textArea.append("Starting game... \n");
 
 				// opens game windows for each player
 				new DataOutputStream(clientOne.getOutputStream()).writeInt(Constants.playerOne.getValue());
 				new DataOutputStream(clientTwo.getOutputStream()).writeInt(Constants.playerTwo.getValue());
+				
+				// creates a new thread for this session of two players
+				SessionHandler thisSession = new SessionHandler(clientOne, clientTwo);
+				new Thread(thisSession).start();
 			}
 			// catches connection errors and quits the server
 		} catch (Exception e) {
