@@ -1,11 +1,11 @@
 import javax.swing.*;
 
-public class XClient {
+public class Client {
 	
 	public static void main(String[] args) {
 
 		// creates a new client window
-		XClientBuild client = new XClientBuild();
+		ClientBuild client = new ClientBuild();
 
 		// sets the size, location and visibly of server window
 		client.setLocation(300, 0);

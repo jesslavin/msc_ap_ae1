@@ -3,7 +3,7 @@ import javax.swing.*;
 import java.io.DataOutputStream;
 import java.net.*;
 
-public class XServerView extends JFrame {
+public class ServerView extends JFrame {
 	
 	// create frame components
 	private JPanel contentPanel;
@@ -13,7 +13,7 @@ public class XServerView extends JFrame {
 	private ServerSocket socket;
 
 	// formats elements and adds them to server window
-	public XServerView(){
+	public ServerView(){
 		contentPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		textArea = new JTextArea();
 		contentPanel.setBackground(Color.BLACK);
@@ -26,8 +26,8 @@ public class XServerView extends JFrame {
 	// establishes a connection and waits for clients to join
 	public void start(){
 		try {
-			XFetchProperties properties = XFetchProperties.fetchInstance();
-			int port = properties.fetchPort();
+			GetProperties properties = GetProperties.getInstance();
+			int port = properties.getPort();
 			
 			// creates a new server socket
 			socket = new ServerSocket(port);
@@ -41,6 +41,8 @@ public class XServerView extends JFrame {
 				textArea.append(clientOne.getInetAddress().getHostAddress() + "\n");
 				textArea.append("Waiting for second player... \n");
 
+				new DataOutputStream(clientOne.getOutputStream()).writeInt(Constants.playerOne.getConstants());
+
 				// waits for second client to join server
 				Socket clientTwo = socket.accept();
 				textArea.append("Second player joined successfully at ");
@@ -48,12 +50,8 @@ public class XServerView extends JFrame {
 				textArea.append("Starting game... \n");
 
 				// opens game windows for each player
-				new DataOutputStream(clientOne.getOutputStream()).writeInt(Constants.playerOne.getValue());
-				new DataOutputStream(clientTwo.getOutputStream()).writeInt(Constants.playerTwo.getValue());
-				
-				// creates a new thread for this session of two players
-				SessionHandler thisSession = new SessionHandler(clientOne, clientTwo);
-				new Thread(thisSession).start();
+				new DataOutputStream(clientTwo.getOutputStream()).writeInt(Constants.playerTwo.getConstants());
+
 			}
 			// catches connection errors and quits the server
 		} catch (Exception e) {

@@ -1,23 +1,20 @@
 import java.awt.Color;
 
-public enum XBoardColours {
+public enum BoardColours {
 
-	// board colours
 	pink(Color.PINK),
 	white(Color.WHITE),
 	black(Color.BLACK),
 	red(Color.RED);
 
-	// constructor
 	private Color colour;
-	XBoardColours(Color colour){
+	BoardColours(Color colour){
 		this.colour = colour;
 	}
 	public Color getColour(){
 		return this.colour;
 	}
 
-	// set colour of each players counters
 	public static Color setPlayerColour(int playerID){
 		if(playerID==1){
 			return white.getColour();
@@ -28,7 +25,6 @@ public enum XBoardColours {
 		return null;
 	}
 
-	// set colour of counter when active
 	public static Color setActiveColour(){
 			return red.getColour();
 	}

@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.io.*;
 import java.net.*;
 
-public class XClientBuild extends JFrame {
+public class ClientBuild extends JFrame {
 
 	// game properties
 	private Player player;
@@ -15,13 +15,13 @@ public class XClientBuild extends JFrame {
 	private DataInputStream input;
 	private DataOutputStream output;
 
-	public XClientBuild() {
+	public ClientBuild() {
 
 		// fetches network properties and tries to connect each client/player
 		try {
-			XFetchProperties pm = XFetchProperties.fetchInstance();
-			server = pm.fetchServer();
-			port = pm.fetchPort();
+			GetProperties pm = GetProperties.getInstance();
+			server = pm.getServer();
+			port = pm.getPort();
 			player = new Player();
 			connect();
 
@@ -39,12 +39,12 @@ public class XClientBuild extends JFrame {
 		try {
 			socket = new Socket(server, port);
 
-			// sets player ID first player = 1 second player = 2
-			player.setPlayerID(input.readInt());
-
 			// handles errors in separate thread
 			input = new DataInputStream(socket.getInputStream());
 			output = new DataOutputStream(socket.getOutputStream());
+
+			// sets player ID first player = 1 second player = 2
+			player.setPlayerID(input.readInt());
 
 			// calls on controller to start game creating new threads to serve each client/player
 			Controller session = new Controller(player, input, output);

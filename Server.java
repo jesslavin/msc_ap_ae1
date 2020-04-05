@@ -1,11 +1,11 @@
 import javax.swing.JFrame;
 
-public class XServer {
+public class Server {
 
 	public static void main(String[] args) {
 
 		// creates a new server window
-		XServerView server = new XServerView();
+		ServerView server = new ServerView();
 
 		// sets the size, location and visibly of server window
 		server.setLocation(0, 0);
