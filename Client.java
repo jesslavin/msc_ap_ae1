@@ -1,20 +1,20 @@
 import javax.swing.*;
 
 public class Client {
-	
-	public static void main(String[] args) {
 
-		// creates a new client window
-		ClientBuild client = new ClientBuild();
+    public static void main(String[] args) {
 
-		// sets the size, location and visibly of server window
-		client.setLocation(300, 0);
-		client.setTitle("English Draughts");
-		client.setSize(450,450);
-		client.setVisible(true);
+        // creates a new client window
+        ClientBuild client = new ClientBuild();
 
-		// stops server running when window is closed
-		client.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // sets the size, location and visibly of server window
+        client.setLocation(300, 0);
+        client.setTitle("English Draughts");
+        client.setSize(450, 450);
+        client.setVisible(true);
 
-	}
+        // stops server running when window is closed
+        client.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    }
 }

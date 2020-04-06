@@ -1,19 +1,19 @@
 public enum Variables {
 
-	sessionVariable(0);
+    sessionVariable(0);
 
-	private int var;
+    private int var;
 
-	Variables(int i){
-		this.setVariable(i);
-	}
+    Variables(int i) {
+        this.setVariable(i);
+    }
 
-	public int getVariable() {
-		return var;
-	}
+    public int getVariable() {
+        return var;
+    }
 
-	public void setVariable(int i) {
-		this.var = i;
-	}
-	
+    public void setVariable(int i) {
+        this.var = i;
+    }
+
 }
