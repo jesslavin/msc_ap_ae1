@@ -6,7 +6,7 @@ import java.net.*;
 public class ServerView extends JFrame {
 	
 	// create frame components
-	private JPanel contentPanel;
+	private JPanel contentSquare;
 	private JTextArea textArea;
 	
 	// sets network properties
@@ -14,19 +14,19 @@ public class ServerView extends JFrame {
 
 	// formats elements and adds them to server window
 	public ServerView(){
-		contentPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		contentSquare = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		textArea = new JTextArea();
-		contentPanel.setBackground(Color.BLACK);
+		contentSquare.setBackground(Color.BLACK);
 		textArea.setBackground(Color.BLACK);
 		textArea.setEnabled(false);
-		add(contentPanel);
-		contentPanel.add(textArea);
+		add(contentSquare);
+		contentSquare.add(textArea);
 	}	
 	
 	// establishes a connection and waits for clients to join
 	public void start(){
 		try {
-			GetProperties properties = GetProperties.getInstance();
+			ReadFile properties = ReadFile.getInstance();
 			int port = properties.getPort();
 			
 			// creates a new server socket
@@ -51,7 +51,10 @@ public class ServerView extends JFrame {
 
 				// opens game windows for each player
 				new DataOutputStream(clientTwo.getOutputStream()).writeInt(Constants.playerTwo.getConstants());
-
+				
+				// creates a new thread for this session of two players
+				SessionHandler thisSession = new SessionHandler(clientOne, clientTwo);
+				new Thread(thisSession).start();
 			}
 			// catches connection errors and quits the server
 		} catch (Exception e) {

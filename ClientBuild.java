@@ -5,7 +5,7 @@ import java.net.*;
 public class ClientBuild extends JFrame {
 
 	// game properties
-	private Player player;
+	private PlayerModel player;
 	private ClientView draughtsBoard;
 
 	// network properties
@@ -19,10 +19,10 @@ public class ClientBuild extends JFrame {
 
 		// fetches network properties and tries to connect each client/player
 		try {
-			GetProperties pm = GetProperties.getInstance();
+			ReadFile pm = ReadFile.getInstance();
 			server = pm.getServer();
 			port = pm.getPort();
-			player = new Player();
+			player = new PlayerModel();
 			connect();
 
 			// catches errors and quits game if unable to connect
@@ -44,7 +44,7 @@ public class ClientBuild extends JFrame {
 			output = new DataOutputStream(socket.getOutputStream());
 
 			// sets player ID first player = 1 second player = 2
-			player.setPlayerID(input.readInt());
+			player.setPlayer(input.readInt());
 
 			// calls on controller to start game creating new threads to serve each client/player
 			Controller session = new Controller(player, input, output);

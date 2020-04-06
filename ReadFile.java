@@ -3,15 +3,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class GetProperties {
+public class ReadFile {
 
-	private static GetProperties i = null;
+	private static ReadFile i = null;
 	private Properties p;
 
 	// reads and fetches properties from config file
-	private GetProperties() throws IOException{
+	private ReadFile() throws IOException{
 		p = new Properties();
-		InputStream input = getClass().getClassLoader().getResourceAsStream("Xconfig.properties");
+		InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties");
 		if(input != null){
 			p.load(input);
 		}else{
@@ -20,9 +20,9 @@ public class GetProperties {
 	}
 
 	// fetches a single property/instance from read file, sets this as i
-	public static GetProperties getInstance() throws IOException{
+	public static ReadFile getInstance() throws IOException{
 		if(i == null){
-			i = new GetProperties();
+			i = new ReadFile();
 		}
 		return i;
 	}

@@ -1,6 +1,6 @@
 import java.awt.Color;
 
-public enum BoardColours {
+public enum GameColours {
 
 	pink(Color.PINK),
 	white(Color.WHITE),
@@ -8,7 +8,7 @@ public enum BoardColours {
 	red(Color.RED);
 
 	private Color colour;
-	BoardColours(Color colour){
+	GameColours(Color colour){
 		this.colour = colour;
 	}
 	public Color getColour(){
