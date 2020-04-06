@@ -17,11 +17,11 @@ public class Board {
 		
 		// rows
 		for(int rows = 0; rows< Constants.rows.getConstants(); rows++){
-			rowInitialFilled = (rows%2 == 1) ? true : false;
+			rowInitialFilled = rows % 2 == 1;
 			
 			// columns
 			for(int columns = 0; columns< Constants.columns.getConstants(); columns++){
-				isFilled = (rowInitialFilled && columns%2 == 0) ? true : (!rowInitialFilled && columns%2 == 1) ? true : false;
+				isFilled = (rowInitialFilled && columns % 2 == 0) || !rowInitialFilled && columns % 2 == 1;
 				count++;
 				
 				tokens[rows][columns] = new TokenBuild(count, rows, columns, isFilled);

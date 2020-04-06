@@ -70,10 +70,7 @@ public class TokenBuild {
 	}
 	
 	public boolean opponentToken(){
-		if(playerID!= Variables.sessionVariable.getVariable() && playerID!= Constants.empty.getConstants())
-			return true;
-		else
-			return false;
+		return playerID != Variables.sessionVariable.getVariable() && playerID != Constants.empty.getConstants();
 	}
 
 	public boolean isKing() {

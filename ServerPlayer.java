@@ -36,7 +36,7 @@ public class ServerPlayer {
 	}
 
 	public int getInput(){
-		int i = 0;;
+		int i = 0;
 		try{
 			i = this.input.readInt();
 			return i;

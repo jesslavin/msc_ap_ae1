@@ -17,11 +17,11 @@ public class Game {
 		
 		//Rows
 		for(int r = 0; r< Constants.rows.getConstants(); r++){
-			rowInitialFilled = (r%2 == 1) ? true : false;
+			rowInitialFilled = r % 2 == 1;
 			
 			//Columns
 			for(int c = 0; c< Constants.columns.getConstants(); c++){
-				isFilled = (rowInitialFilled && c%2 == 0) ? true : (!rowInitialFilled && c%2 == 1) ? true : false;
+				isFilled = (rowInitialFilled && c % 2 == 0) || !rowInitialFilled && c % 2 == 1;
 				count++;
 				
 				tokens[r][c] = new TokenBuild(count, r, c, isFilled);
@@ -77,11 +77,7 @@ public class Game {
 					playerTwo++;
 			}
 		}
-		
-		if(playerOne==0 || playerTwo==0){
-			return true;
-		}
-		
-		return false;
+
+		return playerOne == 0 || playerTwo == 0;
 	}
 }
