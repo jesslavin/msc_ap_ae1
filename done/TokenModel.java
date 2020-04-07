@@ -1,9 +1,9 @@
-package todomodel;
+package done;
 
 import done.Constants;
 import done.Variables;
 
-public class TokenBuild {
+public class TokenModel {
 
     private int TokenID;
     private int TokenRow;
@@ -15,7 +15,7 @@ public class TokenBuild {
     private int playerID;
 
     //Constructor
-    public TokenBuild(int TokenID, int TokenRow, int TokenColumn, boolean isFilled) {
+    public TokenModel(int TokenID, int TokenRow, int TokenColumn, boolean isFilled) {
         this.TokenID = TokenID;
         this.TokenRow = TokenRow;
         this.TokenColumn = TokenColumn;

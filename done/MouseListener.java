@@ -1,8 +1,6 @@
 package done;
 
-import todocontroller.Controller;
 import todoview.Token;
-import todomodel.TokenBuild;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -36,7 +34,7 @@ public class MouseListener extends MouseAdapter {
     private void selectToken(MouseEvent event) {
         try {
             token = (Token) event.getSource();
-            TokenBuild s = token.getToken();
+            TokenModel s = token.getToken();
 
             // if token is already selected - deselect
             if (s.isSelected()) {

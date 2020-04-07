@@ -2,7 +2,7 @@ package todoview;
 import done.BoardColours;
 import done.Variables;
 import done.MouseListener;
-import todomodel.TokenBuild;
+import done.TokenModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,12 +11,12 @@ import java.awt.event.MouseEvent;
 
 public class Token extends JPanel {
 
-    private TokenBuild token;
+    private TokenModel token;
     private boolean hover;
     private MouseHandler handler;
 
     //Constructor
-    public Token(TokenBuild token) {
+    public Token(TokenModel token) {
         this.token = token;
         this.hover = false;
         handler = new MouseHandler();
@@ -80,7 +80,7 @@ public class Token extends JPanel {
     }
 
     // return token
-    public TokenBuild getToken() {
+    public TokenModel getToken() {
         return this.token;
     }
 

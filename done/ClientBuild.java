@@ -1,9 +1,6 @@
-package todomodel;
+package done;
 
-import todocontroller.Controller;
 import todoview.Board;
-import done.MouseListener;
-import done.ReadFile;
 
 import javax.swing.*;
 import java.io.DataInputStream;

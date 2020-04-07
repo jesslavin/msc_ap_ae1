@@ -2,7 +2,8 @@ package todoview;
 
 import done.MouseListener;
 import done.Variables;
-import todomodel.TokenBuild;
+import done.BoardModel;
+import done.TokenModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,16 +12,16 @@ import java.util.LinkedList;
 public class Board extends JPanel {
 
     private Dimension window = new Dimension(720, 720);
-    private todomodel.Board board;
+    private BoardModel board;
     private MouseListener listener;
     private LinkedList<Token> token;
-    private TokenBuild[][] tokens;
+    private TokenModel[][] tokens;
 
     public Board(MouseListener listener) {
         setPreferredSize(window);
         setLayout(new GridLayout(8, 8));
 
-        board = new todomodel.Board();
+        board = new BoardModel();
         this.listener = listener;
         token = new LinkedList<Token>();
         tokens = board.getTokens();
@@ -48,11 +49,11 @@ public class Board extends JPanel {
         repaint();
     }
 
-    public LinkedList<TokenBuild> getPlayable(TokenBuild token) {
+    public LinkedList<TokenModel> getPlayable(TokenModel token) {
         return board.getPlayable(token);
     }
 
-    public TokenBuild getToken(int i) {
+    public TokenModel getToken(int i) {
         return token.get(i - 1).getToken();
     }
 }

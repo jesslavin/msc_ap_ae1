@@ -1,4 +1,6 @@
-package todomodel;
+package done;
+
+import done.Variables;
 
 import javax.swing.*;
 import java.io.DataInputStream;
@@ -6,12 +8,16 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class ServerPlayer {
+public class PlayerModel {
+
     private Socket socket;
     private DataInputStream input;
     private DataOutputStream output;
+    private int player;
+    private boolean currentTurn;
 
-    public ServerPlayer(Socket socket) {
+    public PlayerModel(Socket socket) {
+        setCurrentTurn(false);
         this.socket = socket;
 
         try {
@@ -23,6 +29,26 @@ public class ServerPlayer {
                     JOptionPane.ERROR_MESSAGE, null);
             System.exit(0);
         }
+    }
+
+    public int getPlayer() {
+        return player;
+    }
+
+
+    public void setPlayer(int player) {
+        this.player = player;
+        Variables.sessionVariable.setVariable(player);
+    }
+
+
+    public boolean whosTurn() {
+        return currentTurn;
+    }
+
+
+    public void setCurrentTurn(boolean currentTurn) {
+        this.currentTurn = currentTurn;
     }
 
     public int getOutput(int i) {

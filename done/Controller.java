@@ -1,9 +1,6 @@
-package todocontroller;
+package done;
 
-import todomodel.PlayerModel;
-import todomodel.TokenBuild;
 import todoview.Board;
-import done.Constants;
 
 import javax.swing.*;
 import java.io.DataInputStream;
@@ -20,16 +17,16 @@ public class Controller implements Runnable {
     private DataOutputStream toServer;
     private Board boardSquare;
     private PlayerModel player;
-    private LinkedList<TokenBuild> selectedTokens;
-    private LinkedList<TokenBuild> playableTokens;
+    private LinkedList<TokenModel> selectedTokens;
+    private LinkedList<TokenModel> playableTokens;
 
     public Controller(PlayerModel player, DataInputStream input, DataOutputStream output) {
         this.player = player;
         this.fromServer = input;
         this.toServer = output;
 
-        selectedTokens = new LinkedList<TokenBuild>();
-        playableTokens = new LinkedList<TokenBuild>();
+        selectedTokens = new LinkedList<TokenModel>();
+        playableTokens = new LinkedList<TokenModel>();
     }
 
     public void setup(Board square) {
@@ -93,7 +90,7 @@ public class Controller implements Runnable {
         }
     }
 
-    private void sendMove(TokenBuild from, TokenBuild to) throws IOException {
+    private void sendMove(TokenModel from, TokenModel to) throws IOException {
         toServer.writeInt(from.getTokenID());
         toServer.writeInt(to.getTokenID());
     }
@@ -106,7 +103,7 @@ public class Controller implements Runnable {
         waitingForAction = true;
     }
 
-    public void move(TokenBuild from, TokenBuild to) {
+    public void move(TokenModel from, TokenModel to) {
         to.setPlayerID(from.getPlayer());
         from.setPlayerID(Constants.empty.getConstants());
         checkCrossJump(from, to);
@@ -121,7 +118,7 @@ public class Controller implements Runnable {
         }
     }
 
-    public void tokenSelected(TokenBuild s) {
+    public void tokenSelected(TokenModel s) {
         if (selectedTokens.isEmpty()) {
             addToSelected(s);
         } else if (selectedTokens.size() >= 1) {
@@ -134,7 +131,7 @@ public class Controller implements Runnable {
         }
     }
 
-    private void addToSelected(TokenBuild token) {
+    private void addToSelected(TokenModel token) {
         token.setSelected(true);
         selectedTokens.add(token);
         getPlayableTokens(token);
@@ -142,12 +139,12 @@ public class Controller implements Runnable {
 
     public void tokenDeselected() {
 
-        for (TokenBuild token : selectedTokens)
+        for (TokenModel token : selectedTokens)
             token.setSelected(false);
 
         selectedTokens.clear();
 
-        for (TokenBuild token : playableTokens) {
+        for (TokenModel token : playableTokens) {
             token.setPossibleToMove(false);
         }
 
@@ -156,7 +153,7 @@ public class Controller implements Runnable {
     }
 
 
-    private void getPlayableTokens(TokenBuild s) {
+    private void getPlayableTokens(TokenModel s) {
         playableTokens.clear();
         playableTokens = boardSquare.getPlayable(s);
         boardSquare.activateSquare();
@@ -166,18 +163,18 @@ public class Controller implements Runnable {
         return player.whosTurn();
     }
 
-    private void checkCrossJump(TokenBuild from, TokenBuild to) {
+    private void checkCrossJump(TokenModel from, TokenModel to) {
         if (Math.abs(from.getTokenRow() - to.getTokenRow()) == 2) {
             int middleRow = (from.getTokenRow() + to.getTokenRow()) / 2;
             int middleCol = (from.getTokenColumn() + to.getTokenColumn()) / 2;
 
-            TokenBuild middleToken = boardSquare.getToken((middleRow * 8) + middleCol + 1);
+            TokenModel middleToken = boardSquare.getToken((middleRow * 8) + middleCol + 1);
             middleToken.setPlayerID(Constants.empty.getConstants());
             middleToken.removeKing();
         }
     }
 
-    private void checkKing(TokenBuild from, TokenBuild movedToken) {
+    private void checkKing(TokenModel from, TokenModel movedToken) {
         if (from.isKing()) {
             movedToken.setKing();
             from.removeKing();
@@ -189,8 +186,8 @@ public class Controller implements Runnable {
     }
 
     private void updateReceivedInfo(int from, int to) {
-        TokenBuild fromToken = boardSquare.getToken(from);
-        TokenBuild toToken = boardSquare.getToken(to);
+        TokenModel fromToken = boardSquare.getToken(from);
+        TokenModel toToken = boardSquare.getToken(to);
         toToken.setPlayerID(fromToken.getPlayer());
         fromToken.setPlayerID(Constants.empty.getConstants());
         checkCrossJump(fromToken, toToken);

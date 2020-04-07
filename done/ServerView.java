@@ -1,9 +1,5 @@
 package done;
 
-import todomodel.Game;
-import todomodel.ServerPlayer;
-import todomodel.TokenBuild;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.DataOutputStream;
@@ -65,9 +61,9 @@ public class ServerView extends JFrame {
                 Socket socketOne = clientOne;
                 Socket socketTwo = clientTwo;
                 Runnable thisSession = new Runnable() {
-                    private Game draughts = new Game();
-                    private ServerPlayer white = new ServerPlayer(socketOne);
-                    private ServerPlayer black = new ServerPlayer(socketTwo);
+                    private BoardModel draughts = new BoardModel();
+                    private PlayerModel white = new PlayerModel(socketOne);
+                    private PlayerModel black = new PlayerModel(socketTwo);
                     private boolean continuePlay = true;
 
                     public void run() {
@@ -142,19 +138,19 @@ public class ServerView extends JFrame {
 
                     // updates the board after each move
                     private void updateBoard(int from, int to) {
-                        TokenBuild fromToken = draughts.getToken(from);
-                        TokenBuild toToken = draughts.getToken(to);
+                        TokenModel fromToken = draughts.getToken(from);
+                        TokenModel toToken = draughts.getToken(to);
                         toToken.setPlayerID(fromToken.getPlayer());
                         fromToken.setPlayerID(Constants.empty.getConstants());
                         takeToken(fromToken, toToken);
                     }
 
                     // method to remove token from board when taken by opposing player
-                    private void takeToken(TokenBuild from, TokenBuild to) {
+                    private void takeToken(TokenModel from, TokenModel to) {
                         if (Math.abs(from.getTokenRow() - to.getTokenRow()) == 2) {
                             int middleRow = (from.getTokenRow() + to.getTokenRow()) / 2;
                             int middleColumn = (from.getTokenColumn() + to.getTokenColumn()) / 2;
-                            TokenBuild middleToken = draughts.getToken((middleRow * 8) + middleColumn + 1);
+                            TokenModel middleToken = draughts.getToken((middleRow * 8) + middleColumn + 1);
                             middleToken.setPlayerID(Constants.empty.getConstants());
                         }
                     }

@@ -1,7 +1,5 @@
 package done;
 
-import todomodel.ClientBuild;
-
 import javax.swing.*;
 
 public class Client {

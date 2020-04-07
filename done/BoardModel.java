@@ -1,20 +1,22 @@
-package todomodel;
+package done;
 
 import done.Constants;
+import done.TokenModel;
 
 import java.util.LinkedList;
 
-public class Board {
+public class BoardModel {
 
-    private TokenBuild[][] tokens;
+    private TokenModel[][] tokens;
 
-    public Board() {
-        tokens = new TokenBuild[8][8];
+    public BoardModel() {
+        tokens = new TokenModel[8][8];
 
         setTokens();
         assignTokens();
     }
 
+    // initialize 64 squares with ID, row, column whether or not they are filled with a token
     private void setTokens() {
         boolean rowInitialFilled, isFilled;
         int count = 0;
@@ -28,12 +30,12 @@ public class Board {
                 isFilled = (rowInitialFilled && columns % 2 == 0) || !rowInitialFilled && columns % 2 == 1;
                 count++;
 
-                tokens[rows][columns] = new TokenBuild(count, rows, columns, isFilled);
+                tokens[rows][columns] = new TokenModel(count, rows, columns, isFilled);
             }
         }
     }
 
-    public TokenBuild[][] getTokens() {
+    public TokenModel[][] getTokens() {
         return this.tokens;
     }
 
@@ -64,9 +66,38 @@ public class Board {
         }
     }
 
-    public LinkedList<TokenBuild> getPlayable(TokenBuild selectedToken) {
+    public TokenModel getToken(int from) {
+        for (TokenModel[] sRows : tokens) {
+            for (TokenModel s : sRows) {
+                if (s.getTokenID() == from) {
+                    return s;
+                }
 
-        LinkedList<TokenBuild> playableTokens = new LinkedList<TokenBuild>();
+            }
+        }
+        return null;
+    }
+
+    public boolean isOver() {
+
+        int playerOne = 0;
+        int playerTwo = 0;
+        for (int r = 0; r < Constants.rows.getConstants(); r++) {
+            for (int c = 0; c < Constants.columns.getConstants(); c++) {
+                if (tokens[r][c].getPlayer() == 1)
+                    playerOne++;
+
+                if (tokens[r][c].getPlayer() == 2)
+                    playerTwo++;
+            }
+        }
+
+        return playerOne == 0 || playerTwo == 0;
+    }
+
+    public LinkedList<TokenModel> getPlayable(TokenModel selectedToken) {
+
+        LinkedList<TokenModel> playableTokens = new LinkedList<TokenModel>();
 
         int selectedRow = selectedToken.getTokenRow();
         int selectedColumn = selectedToken.getTokenColumn();
@@ -85,12 +116,12 @@ public class Board {
     }
 
     // check two front tokens
-    private void twoFrontTokens(LinkedList<TokenBuild> pack, int movableRow, int selectedCol) {
+    private void twoFrontTokens(LinkedList<TokenModel> pack, int movableRow, int selectedCol) {
 
         if (movableRow >= 0 && movableRow < 8) {
             //right corner
             if (selectedCol >= 0 && selectedCol < 7) {
-                TokenBuild rightCorner = tokens[movableRow][selectedCol + 1];
+                TokenModel rightCorner = tokens[movableRow][selectedCol + 1];
                 if (rightCorner.getPlayer() == 0) {
                     rightCorner.setPossibleToMove(true);
                     pack.add(rightCorner);
@@ -99,7 +130,7 @@ public class Board {
 
             //left upper corner
             if (selectedCol > 0 && selectedCol <= 8) {
-                TokenBuild leftCorner = tokens[movableRow][selectedCol - 1];
+                TokenModel leftCorner = tokens[movableRow][selectedCol - 1];
                 if (leftCorner.getPlayer() == 0) {
                     leftCorner.setPossibleToMove(true);
                     pack.add(leftCorner);
@@ -109,14 +140,14 @@ public class Board {
     }
 
     // cross jump - two front
-    private void crossJumpFront(LinkedList<TokenBuild> pack, int movableRow, int selectedCol, int middleRow) {
+    private void crossJumpFront(LinkedList<TokenModel> pack, int movableRow, int selectedCol, int middleRow) {
 
         int middleCol;
 
         if (movableRow >= 0 && movableRow < 8) {
             // right upper corner
             if (selectedCol >= 0 && selectedCol < 6) {
-                TokenBuild rightCorner = tokens[movableRow][selectedCol + 2];
+                TokenModel rightCorner = tokens[movableRow][selectedCol + 2];
                 middleCol = (selectedCol + selectedCol + 2) / 2;
                 if (rightCorner.getPlayer() == 0 && opponentPresent(middleRow, middleCol)) {
                     rightCorner.setPossibleToMove(true);
@@ -126,7 +157,7 @@ public class Board {
 
             // left upper corner
             if (selectedCol > 1 && selectedCol <= 7) {
-                TokenBuild leftCorner = tokens[movableRow][selectedCol - 2];
+                TokenModel leftCorner = tokens[movableRow][selectedCol - 2];
                 middleCol = (selectedCol + selectedCol - 2) / 2;
                 if (leftCorner.getPlayer() == 0 && opponentPresent(middleRow, middleCol)) {
                     leftCorner.setPossibleToMove(true);
