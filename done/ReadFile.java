@@ -1,4 +1,4 @@
-package todo;
+package done;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -13,7 +13,7 @@ public class ReadFile {
     // reads and fetches properties from config file
     private ReadFile() throws IOException {
         p = new Properties();
-        InputStream input = getClass().getClassLoader().getResourceAsStream("todo/config.properties");
+        InputStream input = getClass().getClassLoader().getResourceAsStream("done/config.properties");
         if (input != null) {
             p.load(input);
         } else {

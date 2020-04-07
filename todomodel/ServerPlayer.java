@@ -1,4 +1,4 @@
-package todo;
+package todomodel;
 
 import javax.swing.*;
 import java.io.DataInputStream;

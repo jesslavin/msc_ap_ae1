@@ -1,10 +1,10 @@
-package todo;
+package done;
 
 import java.awt.*;
 
 // declares list of colours used in game board
 
-public enum GameColours {
+public enum BoardColours {
 
     pink(Color.PINK), // square colour
     white(Color.WHITE), // player 1 (white) colour
@@ -13,7 +13,7 @@ public enum GameColours {
 
     private Color c;
 
-    GameColours(Color colour) {
+    BoardColours(Color colour) {
         this.c = colour;
     }
 

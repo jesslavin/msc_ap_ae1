@@ -1,4 +1,8 @@
-package todo;
+package done;
+
+import todomodel.Game;
+import todomodel.ServerPlayer;
+import todomodel.TokenBuild;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,7 +38,7 @@ public class ServerView extends JFrame {
 
             // creates a new server socket
             socket = new ServerSocket(port);
-            textArea.append("done.Server started at port " + port + " \n");
+            textArea.append("Server started at port " + port + " \n");
 
             while (true) {
 
@@ -62,17 +66,17 @@ public class ServerView extends JFrame {
                 Socket socketTwo = clientTwo;
                 Runnable thisSession = new Runnable() {
                     private Game draughts = new Game();
-                    private ServerPlayer playerOne = new ServerPlayer(socketOne);
-                    private ServerPlayer playerTwo = new ServerPlayer(socketTwo);
+                    private ServerPlayer white = new ServerPlayer(socketOne);
+                    private ServerPlayer black = new ServerPlayer(socketTwo);
                     private boolean continuePlay = true;
 
                     public void run() {
                         try {
-                            playerOne.getOutput(1);
+                            white.getOutput(1);
                             while (continuePlay) {
                                 // wait for player one to make their move
-                                int from = playerOne.getInput();
-                                int to = playerOne.getInput();
+                                int from = white.getInput();
+                                int to = white.getInput();
                                 // update board accordingly
                                 pass(from, to);
                                 updateBoard(from, to);
@@ -80,21 +84,21 @@ public class ServerView extends JFrame {
                                 // send this data to player two
                                 if (draughts.isOver())
                                     // notifies game is over
-                                    playerTwo.getOutput(Constants.loser.getConstants());
-                                int getData = playerTwo.getOutput(from);
-                                int sendData = playerTwo.getOutput(to);
+                                    black.getOutput(Constants.loser.getConstants());
+                                int getData = black.getOutput(from);
+                                int sendData = black.getOutput(to);
                                 pass(getData, sendData);
 
                                 // if game is over, break out
                                 if (draughts.isOver()) {
-                                    playerOne.getOutput(Constants.winner.getConstants());
+                                    white.getOutput(Constants.winner.getConstants());
                                     continuePlay = false;
                                     break;
                                 }
 
                                 // wait for player two to make their move
-                                from = playerTwo.getInput();
-                                to = playerTwo.getInput();
+                                from = black.getInput();
+                                to = black.getInput();
                                 // update board accordingly
                                 pass(from, to);
                                 updateBoard(from, to);
@@ -102,15 +106,15 @@ public class ServerView extends JFrame {
                                 // send this data to player one
                                 if (draughts.isOver()) {
                                     // notifies game is over
-                                    playerOne.getOutput(Constants.loser.getConstants());
+                                    white.getOutput(Constants.loser.getConstants());
                                 }
-                                getData = playerOne.getOutput(from);
-                                sendData = playerOne.getOutput(to);
+                                getData = white.getOutput(from);
+                                sendData = white.getOutput(to);
                                 pass(getData, sendData);
 
                                 // if game is over, break out
                                 if (draughts.isOver()) {
-                                    playerTwo.getOutput(Constants.winner.getConstants());
+                                    black.getOutput(Constants.winner.getConstants());
                                     continuePlay = false;
                                     break;
                                 }
@@ -119,11 +123,11 @@ public class ServerView extends JFrame {
                         } catch (Exception e) {
                             System.out.println("Connection closed");
 
-                            if (playerOne.connected())
-                                playerOne.closeConnection();
+                            if (white.connected())
+                                white.closeConnection();
 
-                            if (playerTwo.connected())
-                                playerTwo.closeConnection();
+                            if (black.connected())
+                                black.closeConnection();
 
                             return;
                         }
@@ -136,20 +140,20 @@ public class ServerView extends JFrame {
                         }
                     }
 
+                    // updates the board after each move
                     private void updateBoard(int from, int to) {
                         TokenBuild fromToken = draughts.getToken(from);
                         TokenBuild toToken = draughts.getToken(to);
                         toToken.setPlayerID(fromToken.getPlayer());
                         fromToken.setPlayerID(Constants.empty.getConstants());
-
-                        crossJump(fromToken, toToken);
+                        takeToken(fromToken, toToken);
                     }
 
-                    private void crossJump(TokenBuild from, TokenBuild to) {
+                    // method to remove token from board when taken by opposing player
+                    private void takeToken(TokenBuild from, TokenBuild to) {
                         if (Math.abs(from.getTokenRow() - to.getTokenRow()) == 2) {
                             int middleRow = (from.getTokenRow() + to.getTokenRow()) / 2;
                             int middleColumn = (from.getTokenColumn() + to.getTokenColumn()) / 2;
-
                             TokenBuild middleToken = draughts.getToken((middleRow * 8) + middleColumn + 1);
                             middleToken.setPlayerID(Constants.empty.getConstants());
                         }
@@ -157,7 +161,7 @@ public class ServerView extends JFrame {
                 };
                 new Thread(thisSession).start();
             }
-            // catches connection errors and quits the server
+
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);

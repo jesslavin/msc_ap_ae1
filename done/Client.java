@@ -1,6 +1,6 @@
-package todo;
+package done;
 
-import todo.ClientBuild;
+import todomodel.ClientBuild;
 
 import javax.swing.*;
 

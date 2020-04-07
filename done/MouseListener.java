@@ -1,8 +1,8 @@
-package todo;
+package done;
 
-import todo.Controller;
-import todo.Token;
-import todo.TokenBuild;
+import todocontroller.Controller;
+import todoview.Token;
+import todomodel.TokenBuild;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;

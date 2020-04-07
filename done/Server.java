@@ -1,6 +1,4 @@
-package todo;
-
-import todo.ServerView;
+package done;
 
 import javax.swing.*;
 

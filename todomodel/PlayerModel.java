@@ -1,4 +1,6 @@
-package todo;
+package todomodel;
+
+import done.Variables;
 
 public class PlayerModel {
 

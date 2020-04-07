@@ -1,4 +1,9 @@
-package todo;
+package todocontroller;
+
+import todomodel.PlayerModel;
+import todomodel.TokenBuild;
+import todoview.Board;
+import done.Constants;
 
 import javax.swing.*;
 import java.io.DataInputStream;
@@ -13,7 +18,7 @@ public class Controller implements Runnable {
     private boolean isOver;
     private DataInputStream fromServer;
     private DataOutputStream toServer;
-    private ClientView boardSquare;
+    private Board boardSquare;
     private PlayerModel player;
     private LinkedList<TokenBuild> selectedTokens;
     private LinkedList<TokenBuild> playableTokens;
@@ -27,7 +32,7 @@ public class Controller implements Runnable {
         playableTokens = new LinkedList<TokenBuild>();
     }
 
-    public void setup(ClientView square) {
+    public void setup(Board square) {
         this.boardSquare = square;
     }
 

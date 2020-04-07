@@ -1,4 +1,9 @@
-package todo;
+package todomodel;
+
+import todocontroller.Controller;
+import todoview.Board;
+import done.MouseListener;
+import done.ReadFile;
 
 import javax.swing.*;
 import java.io.DataInputStream;
@@ -10,7 +15,7 @@ public class ClientBuild extends JFrame {
 
     // game properties
     private PlayerModel player;
-    private ClientView draughtsBoard;
+    private Board draughtsBoard;
 
     // network properties
     private String server;
@@ -23,9 +28,9 @@ public class ClientBuild extends JFrame {
 
         // fetches network properties and tries to connect each client/player
         try {
-            ReadFile pm = ReadFile.getProperty();
-            server = pm.getServer();
-            port = pm.getPort();
+            ReadFile file = ReadFile.getProperty();
+            server = file.getServer();
+            port = file.getPort();
             player = new PlayerModel();
             connect();
 
@@ -63,15 +68,15 @@ public class ClientBuild extends JFrame {
         }
     }
 
-    private void build(Controller controller) {
+    private void build(Controller c) {
 
         // Creates new mouse listener and adds this to the controller
         MouseListener listener = new MouseListener();
-        listener.addListener(controller);
+        listener.addListener(c);
 
         // Sets up a new draughts board and with a mouse listener
-        draughtsBoard = new ClientView(listener);
-        controller.setup(draughtsBoard);
+        draughtsBoard = new Board(listener);
+        c.setup(draughtsBoard);
         add(draughtsBoard);
     }
 }

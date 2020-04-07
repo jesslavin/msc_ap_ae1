@@ -1,4 +1,8 @@
-package todo;
+package todoview;
+import done.BoardColours;
+import done.Variables;
+import done.MouseListener;
+import todomodel.TokenBuild;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +28,7 @@ public class Token extends JPanel {
         super.paintComponents(gameGraphics);
 
         // creates a pink checkerboard
-        gameGraphics.setColor(GameColours.pink.getColour());
+        gameGraphics.setColor(BoardColours.pink.getColour());
         if (token.getFilled()) {
             gameGraphics.fillRect(0, 0, getWidth(), getHeight());
         }
@@ -33,16 +37,16 @@ public class Token extends JPanel {
         int playerID = token.getPlayer();
         // changes to red if clicked
         if (isSelected()) {
-            gameGraphics.setColor(GameColours.setActiveColour());
+            gameGraphics.setColor(BoardColours.setActiveColour());
             paint(gameGraphics);
         } else {
             if (playerID == 1 || playerID == 2) {
                 // changes to red if hovered over
                 if (hover) {
-                    gameGraphics.setColor(GameColours.setActiveColour());
+                    gameGraphics.setColor(BoardColours.setActiveColour());
                 } else {
                     // otherwise set to player token colour
-                    gameGraphics.setColor(GameColours.setPlayerColour(playerID));
+                    gameGraphics.setColor(BoardColours.setPlayerColour(playerID));
                 }
                 paint(gameGraphics);
             }

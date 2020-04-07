@@ -1,4 +1,6 @@
-package todo;
+package todomodel;
+
+import done.Constants;
 
 public class Game {
 

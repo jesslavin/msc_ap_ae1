@@ -1,24 +1,28 @@
-package todo;
+package todoview;
+
+import done.MouseListener;
+import done.Variables;
+import todomodel.TokenBuild;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.LinkedList;
 
-public class ClientView extends JPanel {
+public class Board extends JPanel {
 
     private Dimension window = new Dimension(720, 720);
-    private Board board;
+    private todomodel.Board board;
     private MouseListener listener;
-    private LinkedList<Token> squares;
+    private LinkedList<Token> token;
     private TokenBuild[][] tokens;
 
-    public ClientView(MouseListener listener) {
+    public Board(MouseListener listener) {
         setPreferredSize(window);
         setLayout(new GridLayout(8, 8));
 
-        board = new Board();
+        board = new todomodel.Board();
         this.listener = listener;
-        squares = new LinkedList<Token>();
+        token = new LinkedList<Token>();
         tokens = board.getTokens();
 
         buildSquares();
@@ -31,14 +35,14 @@ public class ClientView extends JPanel {
                 if (square.getToken().playable() || square.getToken().getPlayer() == Variables.sessionVariable.getVariable()) {
                     square.addMouseListener(listener);
                 }
-                this.squares.add(square);
+                this.token.add(square);
                 add(square);
             }
         }
     }
 
     public void activateSquare() {
-        for (Token square : squares) {
+        for (Token square : token) {
             square.setListener(listener);
         }
         repaint();
@@ -49,6 +53,6 @@ public class ClientView extends JPanel {
     }
 
     public TokenBuild getToken(int i) {
-        return squares.get(i - 1).getToken();
+        return token.get(i - 1).getToken();
     }
 }
