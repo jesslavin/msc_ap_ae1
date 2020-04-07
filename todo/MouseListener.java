@@ -1,12 +1,16 @@
 package todo;
 
+import todo.Controller;
+import todo.Token;
+import todo.TokenBuild;
+
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class MouseListener extends MouseAdapter {
 
-    private Squares squares;
+    private Token token;
     private Controller controller;
 
     public void addListener(Controller c) {
@@ -16,24 +20,23 @@ public class MouseListener extends MouseAdapter {
     public void mousePressed(MouseEvent event) {
         super.mousePressed(event);
 
+        // If it a player's current turn let them select a token, else display wait for other player message
         try {
             if (controller.currentTurn()) {
-                selectCounter(event);
+                selectToken(event);
             } else {
-                JOptionPane.showMessageDialog(null, "Other player to make their move",
-                        "Error", JOptionPane.ERROR_MESSAGE, null);
+                JOptionPane.showMessageDialog(null, "Waiting for other player...");
             }
         } catch (Exception e) {
             System.out.println("Error");
         }
-
-
     }
 
-    private void selectCounter(MouseEvent event) {
+    // Event called upon by mouse click, selects and deselects tokens
+    private void selectToken(MouseEvent event) {
         try {
-            squares = (Squares) event.getSource();
-            TokenBuild s = squares.getToken();
+            token = (Token) event.getSource();
+            TokenBuild s = token.getToken();
 
             // if token is already selected - deselect
             if (s.isSelected()) {
@@ -44,7 +47,7 @@ public class MouseListener extends MouseAdapter {
                 controller.tokenSelected(s);
             }
         } catch (Exception e) {
-            System.out.println("error");
+            System.out.println("Error");
         }
     }
 }

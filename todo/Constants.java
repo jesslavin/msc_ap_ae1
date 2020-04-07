@@ -1,4 +1,4 @@
-package done;
+package todo;
 
 // declares list of variables used during game
 
@@ -12,14 +12,14 @@ public enum Constants {
     columns(8),
     empty(0);
 
-    private int con;
+    private int c;
 
     Constants(int i) {
-        this.con = i;
+        this.c = i;
     }
 
     public int getConstants() {
-        return this.con;
+        return this.c;
     }
 
 }

@@ -1,7 +1,5 @@
 package todo;
 
-import done.Constants;
-
 import java.util.LinkedList;
 
 public class Board {

@@ -1,7 +1,5 @@
 package todo;
 
-import done.Constants;
-
 public class Game {
 
     private TokenBuild[][] tokens;

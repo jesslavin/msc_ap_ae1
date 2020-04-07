@@ -1,7 +1,5 @@
 package todo;
 
-import done.Variables;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.LinkedList;
@@ -11,7 +9,7 @@ public class ClientView extends JPanel {
     private Dimension window = new Dimension(720, 720);
     private Board board;
     private MouseListener listener;
-    private LinkedList<Squares> squares;
+    private LinkedList<Token> squares;
     private TokenBuild[][] tokens;
 
     public ClientView(MouseListener listener) {
@@ -20,7 +18,7 @@ public class ClientView extends JPanel {
 
         board = new Board();
         this.listener = listener;
-        squares = new LinkedList<Squares>();
+        squares = new LinkedList<Token>();
         tokens = board.getTokens();
 
         buildSquares();
@@ -29,7 +27,7 @@ public class ClientView extends JPanel {
     private void buildSquares() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                Squares square = new Squares(tokens[i][j]);
+                Token square = new Token(tokens[i][j]);
                 if (square.getToken().playable() || square.getToken().getPlayer() == Variables.sessionVariable.getVariable()) {
                     square.addMouseListener(listener);
                 }
@@ -40,7 +38,7 @@ public class ClientView extends JPanel {
     }
 
     public void activateSquare() {
-        for (Squares square : squares) {
+        for (Token square : squares) {
             square.setListener(listener);
         }
         repaint();

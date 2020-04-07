@@ -1,21 +1,18 @@
 package todo;
 
-import done.GameColours;
-import done.Variables;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Squares extends JPanel {
+public class Token extends JPanel {
 
     private TokenBuild token;
     private boolean hover;
     private MouseHandler handler;
 
     //Constructor
-    public Squares(TokenBuild token) {
+    public Token(TokenBuild token) {
         this.token = token;
         this.hover = false;
         handler = new MouseHandler();

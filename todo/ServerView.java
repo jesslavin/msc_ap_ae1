@@ -1,8 +1,5 @@
 package todo;
 
-import done.Constants;
-import done.ReadFile;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.DataOutputStream;
