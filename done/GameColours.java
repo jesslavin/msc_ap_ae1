@@ -1,16 +1,20 @@
+package done;
+
 import java.awt.*;
+
+// declares list of colours used in game board
 
 public enum GameColours {
 
-    pink(Color.PINK),
-    white(Color.WHITE),
-    black(Color.BLACK),
-    red(Color.RED);
+    pink(Color.PINK), // square colour
+    white(Color.WHITE), // player 1 (white) colour
+    black(Color.BLACK), // player 2 (black) colour
+    red(Color.RED); // selected token colour
 
-    private Color colour;
+    private Color c;
 
     GameColours(Color colour) {
-        this.colour = colour;
+        this.c = colour;
     }
 
     public static Color setPlayerColour(int playerID) {
@@ -27,6 +31,6 @@ public enum GameColours {
     }
 
     public Color getColour() {
-        return this.colour;
+        return this.c;
     }
 }

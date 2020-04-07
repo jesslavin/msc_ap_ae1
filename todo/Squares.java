@@ -1,3 +1,8 @@
+package todo;
+
+import done.GameColours;
+import done.Variables;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;

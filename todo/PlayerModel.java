@@ -1,3 +1,7 @@
+package todo;
+
+import done.Variables;
+
 public class PlayerModel {
 
     private int player;

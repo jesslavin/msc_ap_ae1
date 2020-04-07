@@ -1,3 +1,7 @@
+package todo;
+
+import done.Constants;
+
 import javax.swing.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -36,17 +40,17 @@ public class Controller implements Runnable {
 
         try {
 
-            if (player.getPlayer() == Constants.playerOne.getConstants()) {
+            if (player.getPlayer() == Constants.white.getConstants()) {
                 fromServer.readInt();
                 player.setCurrentTurn(true);
             }
 
             while (continueToPlay && !isOver) {
-                if (player.getPlayer() == Constants.playerOne.getConstants()) {
+                if (player.getPlayer() == Constants.white.getConstants()) {
                     waitForPlayerAction();
                     if (!isOver)
                         receiveInfoFromServer();
-                } else if (player.getPlayer() == Constants.playerTwo.getConstants()) {
+                } else if (player.getPlayer() == Constants.black.getConstants()) {
                     receiveInfoFromServer();
                     if (!isOver)
                         waitForPlayerAction();
@@ -54,7 +58,7 @@ public class Controller implements Runnable {
             }
 
             if (isOver) {
-                JOptionPane.showMessageDialog(null, "Game is over",
+                JOptionPane.showMessageDialog(null, "done.Game is over",
                         "Information", JOptionPane.INFORMATION_MESSAGE, null);
                 System.exit(0);
             }
@@ -174,9 +178,9 @@ public class Controller implements Runnable {
         if (from.isKing()) {
             movedToken.setKing();
             from.removeKing();
-        } else if (movedToken.getTokenRow() == 7 && movedToken.getPlayer() == Constants.playerOne.getConstants()) {
+        } else if (movedToken.getTokenRow() == 7 && movedToken.getPlayer() == Constants.white.getConstants()) {
             movedToken.setKing();
-        } else if (movedToken.getTokenRow() == 0 && movedToken.getPlayer() == Constants.playerTwo.getConstants()) {
+        } else if (movedToken.getTokenRow() == 0 && movedToken.getPlayer() == Constants.black.getConstants()) {
             movedToken.setKing();
         }
     }

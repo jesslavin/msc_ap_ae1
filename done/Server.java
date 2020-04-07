@@ -1,3 +1,7 @@
+package done;
+
+import todo.ServerView;
+
 import javax.swing.*;
 
 public class Server {

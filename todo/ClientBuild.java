@@ -1,3 +1,7 @@
+package todo;
+
+import done.ReadFile;
+
 import javax.swing.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -21,7 +25,7 @@ public class ClientBuild extends JFrame {
 
         // fetches network properties and tries to connect each client/player
         try {
-            ReadFile pm = ReadFile.getInstance();
+            ReadFile pm = ReadFile.getProperty();
             server = pm.getServer();
             port = pm.getPort();
             player = new PlayerModel();

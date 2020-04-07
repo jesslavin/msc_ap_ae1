@@ -1,3 +1,7 @@
+package todo;
+
+import done.Constants;
+
 public class Game {
 
     private TokenBuild[][] tokens;
@@ -36,7 +40,7 @@ public class Game {
             // columns
             for (int c = 0; c < Constants.columns.getConstants(); c++) {
                 if (tokens[r][c].getFilled()) {
-                    tokens[r][c].setPlayerID(Constants.playerOne.getConstants());
+                    tokens[r][c].setPlayerID(Constants.white.getConstants());
                 }
             }
         }
@@ -46,7 +50,7 @@ public class Game {
             // columns
             for (int c = 0; c < Constants.columns.getConstants(); c++) {
                 if (tokens[r][c].getFilled()) {
-                    tokens[r][c].setPlayerID(Constants.playerTwo.getConstants());
+                    tokens[r][c].setPlayerID(Constants.black.getConstants());
                 }
             }
         }

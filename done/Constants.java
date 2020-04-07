@@ -1,7 +1,11 @@
+package done;
+
+// declares list of variables used during game
+
 public enum Constants {
 
-    playerOne(1),
-    playerTwo(2),
+    white(1), // player 1 (white)
+    black(2), // player 2 (black)
     winner(1),
     loser(0),
     rows(8),

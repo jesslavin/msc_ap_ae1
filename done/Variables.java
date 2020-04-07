@@ -1,19 +1,23 @@
+package done;
+
+// declares list of variables used during game
+
 public enum Variables {
 
     sessionVariable(0);
 
-    private int var;
+    private int v;
 
     Variables(int i) {
         this.setVariable(i);
     }
 
     public int getVariable() {
-        return var;
+        return v;
     }
 
     public void setVariable(int i) {
-        this.var = i;
+        this.v = i;
     }
 
 }
