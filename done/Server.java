@@ -1,7 +1,5 @@
 package done;
 
-import mvc_view.ServerView;
-
 import javax.swing.*;
 
 public class Server {
