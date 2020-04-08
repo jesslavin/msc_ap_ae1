@@ -1,5 +1,3 @@
-package done;
-
 import javax.swing.*;
 
 public class Client {

@@ -1,8 +1,8 @@
 package todoview;
-import done.BoardColours;
-import done.Variables;
-import done.MouseListener;
-import done.TokenModel;
+import BoardColours;
+import Variables;
+import MouseListener;
+import TokenModel;
 
 import javax.swing.*;
 import java.awt.*;

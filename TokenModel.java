@@ -1,8 +1,3 @@
-package done;
-
-import done.Constants;
-import done.Variables;
-
 public class TokenModel {
 
     private int TokenID;

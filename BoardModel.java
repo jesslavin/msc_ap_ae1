@@ -1,8 +1,3 @@
-package done;
-
-import done.Constants;
-import done.TokenModel;
-
 import java.util.LinkedList;
 
 public class BoardModel {

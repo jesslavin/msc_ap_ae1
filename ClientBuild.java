@@ -1,5 +1,3 @@
-package done;
-
 import todoview.Board;
 
 import javax.swing.*;

@@ -1,5 +1,3 @@
-package done;
-
 import todoview.Token;
 
 import javax.swing.*;
