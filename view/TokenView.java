@@ -1,3 +1,9 @@
+package view;
+
+import lists.BoardColours;
+import lists.Variables;
+import model.TokenModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;

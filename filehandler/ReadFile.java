@@ -1,3 +1,5 @@
+package filehandler;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,7 +13,7 @@ public class ReadFile {
     // reads and fetches properties from config file
     private ReadFile() throws IOException {
         p = new Properties();
-        InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties");
+        InputStream input = getClass().getClassLoader().getResourceAsStream("filehandler/config.properties");
         if (input != null) {
             p.load(input);
         } else {

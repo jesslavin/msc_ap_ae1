@@ -1,3 +1,7 @@
+package main;
+
+import view.ServerView;
+
 import javax.swing.*;
 
 public class Server {
@@ -9,7 +13,7 @@ public class Server {
 
         // sets the size, location and visibly of server window
         server.setLocation(0, 0);
-        server.setTitle("Game Server");
+        server.setTitle("Game main.Server");
         server.setSize(300, 200);
         server.setVisible(true);
 

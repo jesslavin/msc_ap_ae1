@@ -1,3 +1,10 @@
+package controller;
+
+import lists.Constants;
+import model.PlayerModel;
+import model.TokenModel;
+import view.ClientView;
+
 import javax.swing.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

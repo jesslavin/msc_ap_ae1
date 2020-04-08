@@ -1,4 +1,4 @@
-// declares list of variables used during game
+package lists;// declares list of variables used during game
 
 public enum Constants {
 

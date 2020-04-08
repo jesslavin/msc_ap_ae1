@@ -1,3 +1,11 @@
+package view;
+
+import filehandler.ReadFile;
+import lists.Constants;
+import model.BoardModel;
+import model.PlayerModel;
+import model.TokenModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.DataOutputStream;
@@ -32,7 +40,7 @@ public class ServerView extends JFrame {
 
             // creates a new server socket
             socket = new ServerSocket(port);
-            textArea.append("Server started at port " + port + " \n");
+            textArea.append("main.Server started at port " + port + " \n");
 
             while (true) {
 
@@ -52,7 +60,7 @@ public class ServerView extends JFrame {
                 textArea.append("Starting game... \n");
 
                 // opens game windows for each player
-                // ADD BACK IN new DataOutputStream(clientOne.getOutputStream()).writeInt(Constants.playerOne.getConstants());
+                // ADD BACK IN new DataOutputStream(clientOne.getOutputStream()).writeInt(lists.Constants.playerOne.getConstants());
                 new DataOutputStream(clientTwo.getOutputStream()).writeInt(Constants.black.getConstants());
 
                 // creates a new thread for this session of two players

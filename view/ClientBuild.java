@@ -1,3 +1,11 @@
+package view;
+
+import controller.Controller;
+import view.MouseListener;
+import filehandler.ReadFile;
+import model.PlayerModel;
+import view.ClientView;
+
 import javax.swing.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

@@ -1,3 +1,7 @@
+package model;
+
+import lists.Constants;
+
 import java.util.LinkedList;
 
 public class BoardModel {

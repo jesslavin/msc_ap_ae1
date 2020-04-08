@@ -1,3 +1,5 @@
+package lists;
+
 import java.awt.*;
 
 // declares list of colours used in game board

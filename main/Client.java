@@ -1,3 +1,7 @@
+package main;
+
+import view.ClientBuild;
+
 import javax.swing.*;
 
 public class Client {

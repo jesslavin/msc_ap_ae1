@@ -1,3 +1,10 @@
+package view;
+
+import lists.Variables;
+import model.BoardModel;
+import model.TokenModel;
+import view.TokenView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.LinkedList;

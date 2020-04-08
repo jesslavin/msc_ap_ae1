@@ -1,3 +1,8 @@
+package model;
+
+import lists.Constants;
+import lists.Variables;
+
 public class TokenModel {
 
     private int TokenID;
