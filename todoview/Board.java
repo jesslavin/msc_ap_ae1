@@ -1,9 +1,9 @@
 package todoview;
 
-import done.MouseListener;
-import done.Variables;
-import done.BoardModel;
-import done.TokenModel;
+import MouseListener;
+import Variables;
+import BoardModel;
+import TokenModel;
 
 import javax.swing.*;
 import java.awt.*;
