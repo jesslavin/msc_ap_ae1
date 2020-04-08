@@ -1,8 +1,8 @@
-package view;
+package mvc_view;
 
-import controller.Controller;
-import model.PlayerModel;
 import done.ReadFile;
+import mvc_controller.Controller;
+import mvc_model.PlayerModel;
 
 import javax.swing.*;
 import java.io.DataInputStream;

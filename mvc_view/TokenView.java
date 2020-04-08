@@ -1,8 +1,8 @@
-package view;
+package mvc_view;
 
-import model.TokenModel;
 import done.BoardColours;
 import done.Variables;
+import mvc_model.TokenModel;
 
 import javax.swing.*;
 import java.awt.*;

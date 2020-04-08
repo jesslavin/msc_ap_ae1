@@ -1,10 +1,10 @@
-package view;
+package mvc_view;
 
-import model.BoardModel;
-import model.PlayerModel;
-import model.TokenModel;
 import done.Constants;
 import done.ReadFile;
+import mvc_model.BoardModel;
+import mvc_model.PlayerModel;
+import mvc_model.TokenModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,7 +40,7 @@ public class ServerView extends JFrame {
 
             // creates a new server socket
             socket = new ServerSocket(port);
-            textArea.append("main.Server started at port " + port + " \n");
+            textArea.append("Server started at port " + port + " \n");
 
             while (true) {
 

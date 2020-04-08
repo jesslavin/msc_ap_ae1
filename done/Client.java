@@ -1,6 +1,6 @@
 package done;
 
-import view.ClientBuild;
+import mvc_view.ClientBuild;
 
 import javax.swing.*;
 

@@ -1,13 +1,13 @@
 package done;
 
+import java.util.Properties;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Properties;
 
 public class ReadFile {
 
-    private static ReadFile file = null;
+    private static ReadFile config = null;
     private Properties p;
 
     // reads and fetches properties from config file
@@ -23,10 +23,10 @@ public class ReadFile {
 
     // fetches a single property from read file
     public static ReadFile getProperty() throws IOException {
-        if (file == null) {
-            file = new ReadFile();
+        if (config == null) {
+            config = new ReadFile();
         }
-        return file;
+        return config;
     }
 
     // returns the server set by the config file

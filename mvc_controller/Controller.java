@@ -1,9 +1,9 @@
-package controller;
+package mvc_controller;
 
-import model.PlayerModel;
-import model.TokenModel;
 import done.Constants;
-import view.ClientView;
+import mvc_model.PlayerModel;
+import mvc_model.TokenModel;
+import mvc_view.ClientView;
 
 import javax.swing.*;
 import java.io.DataInputStream;

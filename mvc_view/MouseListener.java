@@ -1,8 +1,7 @@
-package view;
+package mvc_view;
 
-import controller.Controller;
-import model.TokenModel;
-import view.TokenView;
+import mvc_controller.Controller;
+import mvc_model.TokenModel;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;

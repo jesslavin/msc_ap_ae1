@@ -1,4 +1,6 @@
-package done;// declares list of constants used during game
+package done;
+
+// declares list of colours to be used during game
 
 public enum Constants {
 
@@ -12,8 +14,8 @@ public enum Constants {
 
     private int c;
 
-    Constants(int i) {
-        this.c = i;
+    Constants(int c) {
+        this.c = c;
     }
 
     public int getConstants() {

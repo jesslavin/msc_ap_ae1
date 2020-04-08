@@ -1,4 +1,4 @@
-package model;
+package mvc_model;
 
 import done.Constants;
 

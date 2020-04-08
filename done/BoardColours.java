@@ -13,8 +13,8 @@ public enum BoardColours {
 
     private Color c;
 
-    BoardColours(Color colour) {
-        this.c = colour;
+    BoardColours(Color c) {
+        this.c = c;
     }
 
     public static Color setPlayerColour(int playerID) {

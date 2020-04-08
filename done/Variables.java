@@ -1,4 +1,6 @@
-package done;// declares list of variables used during game
+package done;
+
+// declares list of variables used during game
 
 public enum Variables {
 
@@ -6,8 +8,8 @@ public enum Variables {
 
     private int v;
 
-    Variables(int i) {
-        this.setVariable(i);
+    Variables(int v) {
+        this.setVariable(v);
     }
 
     public int getVariable() {

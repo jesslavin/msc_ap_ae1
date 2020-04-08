@@ -1,6 +1,6 @@
 package done;
 
-import view.ServerView;
+import mvc_view.ServerView;
 
 import javax.swing.*;
 
