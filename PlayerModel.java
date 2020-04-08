@@ -13,7 +13,6 @@ public class PlayerModel {
     private boolean currentTurn;
 
     public PlayerModel(Socket socket) {
-        setCurrentTurn(false);
         this.socket = socket;
 
         try {
@@ -25,6 +24,11 @@ public class PlayerModel {
                     JOptionPane.ERROR_MESSAGE, null);
             System.exit(0);
         }
+    }
+
+    public PlayerModel() {
+        setCurrentTurn(false);
+
     }
 
     public int getPlayer() {

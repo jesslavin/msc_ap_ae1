@@ -1,10 +1,3 @@
-package todoview;
-
-import MouseListener;
-import Variables;
-import BoardModel;
-import TokenModel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.LinkedList;

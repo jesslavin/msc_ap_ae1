@@ -1,9 +1,3 @@
-package todoview;
-import BoardColours;
-import Variables;
-import MouseListener;
-import TokenModel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
