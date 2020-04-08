@@ -1,10 +1,10 @@
 package view;
 
-import filehandler.ReadFile;
-import lists.Constants;
 import model.BoardModel;
 import model.PlayerModel;
 import model.TokenModel;
+import done.Constants;
+import done.ReadFile;
 
 import javax.swing.*;
 import java.awt.*;

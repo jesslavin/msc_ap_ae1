@@ -1,7 +1,7 @@
 package model;
 
-import lists.Constants;
-import lists.Variables;
+import done.Constants;
+import done.Variables;
 
 public class TokenModel {
 
@@ -75,7 +75,7 @@ public class TokenModel {
     }
 
     public boolean opponentToken() {
-        return playerID != Variables.sessionVariable.getVariable() && playerID != Constants.empty.getConstants();
+        return playerID != Variables.variable.getVariable() && playerID != Constants.empty.getConstants();
     }
 
     public boolean isKing() {

@@ -1,8 +1,8 @@
 package controller;
 
-import lists.Constants;
 import model.PlayerModel;
 import model.TokenModel;
+import done.Constants;
 import view.ClientView;
 
 import javax.swing.*;

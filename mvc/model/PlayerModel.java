@@ -1,6 +1,6 @@
 package model;
 
-import lists.Variables;
+import done.Variables;
 
 import javax.swing.*;
 import java.io.DataInputStream;
@@ -42,7 +42,7 @@ public class PlayerModel {
 
     public void setPlayer(int player) {
         this.player = player;
-        Variables.sessionVariable.setVariable(player);
+        Variables.variable.setVariable(player);
     }
 
 

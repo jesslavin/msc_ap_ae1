@@ -1,8 +1,8 @@
 package view;
 
-import lists.BoardColours;
-import lists.Variables;
 import model.TokenModel;
+import done.BoardColours;
+import done.Variables;
 
 import javax.swing.*;
 import java.awt.*;
@@ -61,7 +61,7 @@ public class TokenView extends JPanel {
     }
 
     public void setListener() {
-        if (token.playable() || token.getPlayer() == Variables.sessionVariable.getVariable()) {
+        if (token.playable() || token.getPlayer() == Variables.variable.getVariable()) {
             this.removeMouseListener(handler);
             this.addMouseListener(handler);
         } else {
@@ -71,7 +71,7 @@ public class TokenView extends JPanel {
 
     public void setListener(MouseListener mouseListener) {
         setListener();
-        if (token.playable() || token.getPlayer() == Variables.sessionVariable.getVariable()) {
+        if (token.playable() || token.getPlayer() == Variables.variable.getVariable()) {
             this.removeMouseListener(mouseListener);
             this.addMouseListener(mouseListener);
         } else {

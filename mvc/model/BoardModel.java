@@ -1,6 +1,6 @@
 package model;
 
-import lists.Constants;
+import done.Constants;
 
 import java.util.LinkedList;
 

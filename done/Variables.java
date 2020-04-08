@@ -1,8 +1,8 @@
-package lists;// declares list of variables used during game
+package done;// declares list of variables used during game
 
 public enum Variables {
 
-    sessionVariable(0);
+    variable(0);
 
     private int v;
 

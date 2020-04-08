@@ -1,4 +1,4 @@
-package main;
+package done;
 
 import view.ServerView;
 
@@ -13,7 +13,7 @@ public class Server {
 
         // sets the size, location and visibly of server window
         server.setLocation(0, 0);
-        server.setTitle("Game main.Server");
+        server.setTitle("Game Server");
         server.setSize(300, 200);
         server.setVisible(true);
 

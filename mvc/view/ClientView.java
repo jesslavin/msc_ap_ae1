@@ -1,9 +1,8 @@
 package view;
 
-import lists.Variables;
 import model.BoardModel;
 import model.TokenModel;
-import view.TokenView;
+import done.Variables;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +32,7 @@ public class ClientView extends JPanel {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 TokenView square = new TokenView(tokens[i][j]);
-                if (square.getToken().playable() || square.getToken().getPlayer() == Variables.sessionVariable.getVariable()) {
+                if (square.getToken().playable() || square.getToken().getPlayer() == Variables.variable.getVariable()) {
                     square.addMouseListener(listener);
                 }
                 this.token.add(square);
