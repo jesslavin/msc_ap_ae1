@@ -11,7 +11,7 @@ public class Controller implements Runnable {
     private boolean isOver;
     private DataInputStream fromServer;
     private DataOutputStream toServer;
-    private Board boardSquare;
+    private ClientView boardSquare;
     private PlayerModel player;
     private LinkedList<TokenModel> selectedTokens;
     private LinkedList<TokenModel> playableTokens;
@@ -25,7 +25,7 @@ public class Controller implements Runnable {
         playableTokens = new LinkedList<TokenModel>();
     }
 
-    public void setup(Board square) {
+    public void setup(ClientView square) {
         this.boardSquare = square;
     }
 

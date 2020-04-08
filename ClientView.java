@@ -2,21 +2,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.LinkedList;
 
-public class Board extends JPanel {
+public class ClientView extends JPanel {
 
     private Dimension window = new Dimension(720, 720);
     private BoardModel board;
     private MouseListener listener;
-    private LinkedList<Token> token;
+    private LinkedList<TokenView> token;
     private TokenModel[][] tokens;
 
-    public Board(MouseListener listener) {
+    public ClientView(MouseListener listener) {
         setPreferredSize(window);
         setLayout(new GridLayout(8, 8));
 
         board = new BoardModel();
         this.listener = listener;
-        token = new LinkedList<Token>();
+        token = new LinkedList<TokenView>();
         tokens = board.getTokens();
 
         buildSquares();
@@ -25,7 +25,7 @@ public class Board extends JPanel {
     private void buildSquares() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                Token square = new Token(tokens[i][j]);
+                TokenView square = new TokenView(tokens[i][j]);
                 if (square.getToken().playable() || square.getToken().getPlayer() == Variables.sessionVariable.getVariable()) {
                     square.addMouseListener(listener);
                 }
@@ -36,7 +36,7 @@ public class Board extends JPanel {
     }
 
     public void activateSquare() {
-        for (Token square : token) {
+        for (TokenView square : token) {
             square.setListener(listener);
         }
         repaint();

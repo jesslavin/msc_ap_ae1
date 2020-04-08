@@ -3,14 +3,14 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Token extends JPanel {
+public class TokenView extends JPanel {
 
     private TokenModel token;
     private boolean hover;
     private MouseHandler handler;
 
     //Constructor
-    public Token(TokenModel token) {
+    public TokenView(TokenModel token) {
         this.token = token;
         this.hover = false;
         handler = new MouseHandler();

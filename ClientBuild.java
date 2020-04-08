@@ -8,7 +8,7 @@ public class ClientBuild extends JFrame {
 
     // game properties
     private PlayerModel player;
-    private Board draughtsBoard;
+    private ClientView draughtsBoard;
 
     // network properties
     private String server;
@@ -68,7 +68,7 @@ public class ClientBuild extends JFrame {
         listener.addListener(c);
 
         // Sets up a new draughts board and with a mouse listener
-        draughtsBoard = new Board(listener);
+        draughtsBoard = new ClientView(listener);
         c.setup(draughtsBoard);
         add(draughtsBoard);
     }

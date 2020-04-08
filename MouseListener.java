@@ -4,7 +4,7 @@ import java.awt.event.MouseEvent;
 
 public class MouseListener extends MouseAdapter {
 
-    private Token token;
+    private TokenView token;
     private Controller controller;
 
     public void addListener(Controller c) {
@@ -29,7 +29,7 @@ public class MouseListener extends MouseAdapter {
     // Event called upon by mouse click, selects and deselects tokens
     private void selectToken(MouseEvent event) {
         try {
-            token = (Token) event.getSource();
+            token = (TokenView) event.getSource();
             TokenModel s = token.getToken();
 
             // if token is already selected - deselect
