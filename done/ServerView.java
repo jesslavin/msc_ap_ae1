@@ -1,7 +1,5 @@
 package done;
 
-import done.Constants;
-import done.ReadFile;
 import mvc_model.BoardModel;
 import mvc_model.PlayerModel;
 import mvc_model.TokenModel;
@@ -86,9 +84,9 @@ public class ServerView extends JFrame {
                                 if (draughts.isOver())
                                     // notifies game is over
                                     black.getOutput(Constants.loser.getConstants());
-                                int getData = black.getOutput(from);
-                                int sendData = black.getOutput(to);
-                                pass(getData, sendData);
+                                int get = black.getOutput(from);
+                                int send = black.getOutput(to);
+                                pass(get, send);
 
                                 // if game is over, break out
                                 if (draughts.isOver()) {
@@ -109,9 +107,9 @@ public class ServerView extends JFrame {
                                     // notifies game is over
                                     white.getOutput(Constants.loser.getConstants());
                                 }
-                                getData = white.getOutput(from);
-                                sendData = white.getOutput(to);
-                                pass(getData, sendData);
+                                get = white.getOutput(from);
+                                send = white.getOutput(to);
+                                pass(get, send);
 
                                 // if game is over, break out
                                 if (draughts.isOver()) {
@@ -160,6 +158,7 @@ public class ServerView extends JFrame {
                         }
                     }
                 };
+                // starts a new thread to handle particular session
                 new Thread(thisSession).start();
             }
 

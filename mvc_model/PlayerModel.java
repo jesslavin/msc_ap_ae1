@@ -31,7 +31,7 @@ public class PlayerModel {
     }
 
     public PlayerModel() {
-        setCurrentTurn(false);
+        setTurn(false);
 
     }
 
@@ -46,12 +46,12 @@ public class PlayerModel {
     }
 
 
-    public boolean whosTurn() {
+    public boolean active() {
         return currentTurn;
     }
 
 
-    public void setCurrentTurn(boolean currentTurn) {
+    public void setTurn(boolean currentTurn) {
         this.currentTurn = currentTurn;
     }
 

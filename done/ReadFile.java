@@ -7,6 +7,7 @@ import java.io.InputStream;
 
 public class ReadFile {
 
+    // instance variables
     private static ReadFile config = null;
     private Properties p;
 

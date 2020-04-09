@@ -41,14 +41,14 @@ public class ClientView extends JPanel {
         }
     }
 
-    public void activateSquare() {
+    public void play() {
         for (TokenView square : token) {
             square.setListener(listener);
         }
         repaint();
     }
 
-    public LinkedList<TokenModel> getPlayable(TokenModel token) {
+    public LinkedList<TokenModel> playableToken(TokenModel token) {
         return board.getPlayable(token);
     }
 

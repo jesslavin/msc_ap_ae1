@@ -1,7 +1,7 @@
 package mvc_view;
 
 import done.ReadFile;
-import mvc_controller.Controller;
+import mvc_controller.DraughtsController;
 import mvc_model.PlayerModel;
 
 import javax.swing.*;
@@ -55,7 +55,7 @@ public class ClientBuild extends JFrame {
             player.setPlayer(input.readInt());
 
             // calls on controller to start game creating new threads to serve each client/player
-            Controller session = new Controller(player, input, output);
+            DraughtsController session = new DraughtsController(player, input, output);
             build(session);
             new Thread(session).start();
 
@@ -67,7 +67,7 @@ public class ClientBuild extends JFrame {
         }
     }
 
-    private void build(Controller c) {
+    private void build(DraughtsController c) {
 
         // Creates new mouse listener and adds this to the controller
         MouseListener listener = new MouseListener();
@@ -75,7 +75,7 @@ public class ClientBuild extends JFrame {
 
         // Sets up a new draughts board and with a mouse listener
         draughtsBoard = new ClientView(listener);
-        c.setup(draughtsBoard);
+        c.activeToken(draughtsBoard);
         add(draughtsBoard);
     }
 }

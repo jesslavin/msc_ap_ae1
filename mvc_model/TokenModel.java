@@ -29,7 +29,7 @@ public class TokenModel {
         this.isPossibleToMove = false;
     }
 
-    public boolean getFilled() {
+    public boolean filled() {
         return space;
     }
 
@@ -69,7 +69,7 @@ public class TokenModel {
         return isPossibleToMove;
     }
 
-    public void setPossibleToMove(boolean isPossibleToMove) {
+    public void moveable(boolean isPossibleToMove) {
         this.isPossibleToMove = isPossibleToMove;
     }
 
@@ -77,11 +77,11 @@ public class TokenModel {
         return playerID != Variables.variable.getVariable() && playerID != Constants.empty.getConstants();
     }
 
-    public boolean isKing() {
+    public boolean king() {
         return isKing;
     }
 
-    public void setKing() {
+    public void makeKing() {
         this.isKing = true;
     }
 

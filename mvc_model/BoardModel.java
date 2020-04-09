@@ -16,19 +16,19 @@ public class BoardModel {
 
     // initialize 64 squares with ID, row, column whether or not they are filled with a token
     private void setTokens() {
-        boolean rowInitialFilled, isFilled;
-        int count = 0;
+        boolean filled, existingToken;
+        int i = 0;
 
         // rows
-        for (int rows = 0; rows < Constants.rows.getConstants(); rows++) {
-            rowInitialFilled = rows % 2 == 1;
+        for (int r = 0; r < Constants.rows.getConstants(); r++) {
+            filled = r % 2 == 1;
 
             // columns
-            for (int columns = 0; columns < Constants.columns.getConstants(); columns++) {
-                isFilled = (rowInitialFilled && columns % 2 == 0) || !rowInitialFilled && columns % 2 == 1;
-                count++;
+            for (int c = 0; c < Constants.columns.getConstants(); c++) {
+                existingToken = (filled && c % 2 == 0) || !filled && c % 2 == 1;
+                i++;
 
-                tokens[rows][columns] = new TokenModel(count, rows, columns, isFilled);
+                tokens[r][c] = new TokenModel(i, r, c, existingToken);
             }
         }
     }
@@ -43,7 +43,7 @@ public class BoardModel {
         for (int r = 0; r < 3; r++) {
             // columns
             for (int c = 0; c < Constants.columns.getConstants(); c++) {
-                if (tokens[r][c].getFilled()) {
+                if (tokens[r][c].filled()) {
                     tokens[r][c].setPlayerID(Constants.white.getConstants());
                 }
             }
@@ -53,7 +53,7 @@ public class BoardModel {
         for (int r = 5; r < 8; r++) {
             // columns
             for (int c = 0; c < Constants.columns.getConstants(); c++) {
-                if (tokens[r][c].getFilled()) {
+                if (tokens[r][c].filled()) {
                     tokens[r][c].setPlayerID(Constants.black.getConstants());
                 }
             }
@@ -101,7 +101,7 @@ public class BoardModel {
         // check two front tokens
         twoFrontTokens(playableTokens, movableRow, selectedColumn);
         crossJumpFront(playableTokens, (selectedToken.getPlayer() == 1) ? movableRow + 1 : movableRow - 1, selectedColumn, movableRow);
-        if (selectedToken.isKing()) {
+        if (selectedToken.king()) {
             movableRow = (selectedToken.getPlayer() == 1) ? selectedRow - 1 : selectedRow + 1;
             twoFrontTokens(playableTokens, movableRow, selectedColumn);
             crossJumpFront(playableTokens, (selectedToken.getPlayer() == 1) ? movableRow - 1 : movableRow + 1, selectedColumn, movableRow);
@@ -117,7 +117,7 @@ public class BoardModel {
             if (selectedCol >= 0 && selectedCol < 7) {
                 TokenModel rightCorner = tokens[movableRow][selectedCol + 1];
                 if (rightCorner.getPlayer() == 0) {
-                    rightCorner.setPossibleToMove(true);
+                    rightCorner.moveable(true);
                     pack.add(rightCorner);
                 }
             }
@@ -126,7 +126,7 @@ public class BoardModel {
             if (selectedCol > 0 && selectedCol <= 8) {
                 TokenModel leftCorner = tokens[movableRow][selectedCol - 1];
                 if (leftCorner.getPlayer() == 0) {
-                    leftCorner.setPossibleToMove(true);
+                    leftCorner.moveable(true);
                     pack.add(leftCorner);
                 }
             }
@@ -144,7 +144,7 @@ public class BoardModel {
                 TokenModel rightCorner = tokens[movableRow][selectedCol + 2];
                 middleCol = (selectedCol + selectedCol + 2) / 2;
                 if (rightCorner.getPlayer() == 0 && opponentPresent(middleRow, middleCol)) {
-                    rightCorner.setPossibleToMove(true);
+                    rightCorner.moveable(true);
                     pack.add(rightCorner);
                 }
             }
@@ -154,7 +154,7 @@ public class BoardModel {
                 TokenModel leftCorner = tokens[movableRow][selectedCol - 2];
                 middleCol = (selectedCol + selectedCol - 2) / 2;
                 if (leftCorner.getPlayer() == 0 && opponentPresent(middleRow, middleCol)) {
-                    leftCorner.setPossibleToMove(true);
+                    leftCorner.moveable(true);
                     pack.add(leftCorner);
                 }
             }

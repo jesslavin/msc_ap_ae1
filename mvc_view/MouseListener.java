@@ -1,6 +1,6 @@
 package mvc_view;
 
-import mvc_controller.Controller;
+import mvc_controller.DraughtsController;
 import mvc_model.TokenModel;
 
 import javax.swing.*;
@@ -10,9 +10,9 @@ import java.awt.event.MouseEvent;
 public class MouseListener extends MouseAdapter {
 
     private TokenView token;
-    private Controller controller;
+    private DraughtsController controller;
 
-    public void addListener(Controller c) {
+    public void addListener(DraughtsController c) {
         this.controller = c;
     }
 
@@ -21,7 +21,7 @@ public class MouseListener extends MouseAdapter {
 
         // If it a player's current turn let them select a token, else display wait for other player message
         try {
-            if (controller.currentTurn()) {
+            if (controller.activePlayer()) {
                 selectToken(event);
             } else {
                 JOptionPane.showMessageDialog(null, "Waiting for other player...");
@@ -39,11 +39,11 @@ public class MouseListener extends MouseAdapter {
 
             // if token is already selected - deselect
             if (s.isSelected()) {
-                controller.tokenDeselected();
+                controller.deselectToken();
             }
             // else select
             else {
-                controller.tokenSelected(s);
+                controller.selectToken(s);
             }
         } catch (Exception e) {
             System.out.println("Error");

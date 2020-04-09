@@ -29,7 +29,7 @@ public class TokenView extends JPanel {
 
         // creates a pink checkerboard
         gameGraphics.setColor(BoardColours.pink.getColour());
-        if (token.getFilled()) {
+        if (token.filled()) {
             gameGraphics.fillRect(0, 0, getWidth(), getHeight());
         }
 
@@ -53,7 +53,7 @@ public class TokenView extends JPanel {
         }
 
         // additional graphics for king tokens
-        if (token.isKing() && token.getFilled()) {
+        if (token.king() && token.filled()) {
             gameGraphics.setFont(new Font("Georgia", Font.BOLD, 20));
             gameGraphics.setColor(Color.PINK);
             gameGraphics.drawString("K", getWidth() / 2 - 8, getHeight() / 2 + 8);
