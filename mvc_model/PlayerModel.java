@@ -24,8 +24,7 @@ public class PlayerModel {
             output = new DataOutputStream(this.socket.getOutputStream());
 
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Unable to connect player, please try again", "Error",
-                    JOptionPane.ERROR_MESSAGE, null);
+            JOptionPane.showMessageDialog(null, "Unable to connect player, please try again");
             System.exit(0);
         }
     }

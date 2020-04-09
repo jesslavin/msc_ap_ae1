@@ -35,8 +35,7 @@ public class ClientBuild extends JFrame {
 
             // catches errors and quits game if unable to connect
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Unable to connect, please check configuration", "Error",
-                    JOptionPane.ERROR_MESSAGE, null);
+            JOptionPane.showMessageDialog(null, "Unable to connect");
             System.exit(0);
         }
 
@@ -61,8 +60,7 @@ public class ClientBuild extends JFrame {
 
             // catches errors and quits game if errors are present
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Unable to connect player, please try again", "Error",
-                    JOptionPane.ERROR_MESSAGE, null);
+            JOptionPane.showMessageDialog(null, "Unable to connect");
             System.exit(0);
         }
     }
