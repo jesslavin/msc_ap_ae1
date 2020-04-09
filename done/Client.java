@@ -1,9 +1,5 @@
 package done;
 
-import mvc_model.PlayerModel;
-import mvc_view.ClientView;
-import mvc_view.MouseListener;
-
 import javax.swing.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

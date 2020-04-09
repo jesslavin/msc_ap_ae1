@@ -1,8 +1,5 @@
 package done;
 
-import mvc_model.BoardModel;
-import mvc_model.PlayerModel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.DataOutputStream;
