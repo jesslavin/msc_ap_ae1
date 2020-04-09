@@ -14,7 +14,6 @@ public class TokenModel {
     private boolean isPossibleToMove;
     private int playerID;
 
-    //Constructor
     public TokenModel(int TokenID, int TokenRow, int TokenColumn, boolean isFilled) {
         this.TokenID = TokenID;
         this.TokenRow = TokenRow;

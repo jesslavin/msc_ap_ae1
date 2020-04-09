@@ -50,7 +50,7 @@ public class ServerView extends JFrame {
                 textArea.append(clientOne.getInetAddress().getHostAddress() + "\n");
                 textArea.append("Waiting for second player... \n");
 
-                // DELETE LATER
+                // MOVE LATER
                 new DataOutputStream(clientOne.getOutputStream()).writeInt(Constants.white.getConstants());
 
                 // waits for second client to join server
@@ -60,7 +60,6 @@ public class ServerView extends JFrame {
                 textArea.append("Starting game... \n");
 
                 // opens game windows for each player
-                // ADD BACK IN new DataOutputStream(clientOne.getOutputStream()).writeInt(lists.Constants.playerOne.getConstants());
                 new DataOutputStream(clientTwo.getOutputStream()).writeInt(Constants.black.getConstants());
 
                 // creates a new thread for this session of two players

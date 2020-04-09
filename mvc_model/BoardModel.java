@@ -10,7 +10,6 @@ public class BoardModel {
 
     public BoardModel() {
         tokens = new TokenModel[8][8];
-
         setTokens();
         assignTokens();
     }
@@ -36,10 +35,6 @@ public class BoardModel {
 
     public TokenModel[][] getTokens() {
         return this.tokens;
-    }
-
-    public int totalTokens() {
-        return tokens.length;
     }
 
     private void assignTokens() {
@@ -79,19 +74,19 @@ public class BoardModel {
 
     public boolean isOver() {
 
-        int playerOne = 0;
-        int playerTwo = 0;
+        int white = 0;
+        int black = 0;
         for (int r = 0; r < Constants.rows.getConstants(); r++) {
             for (int c = 0; c < Constants.columns.getConstants(); c++) {
                 if (tokens[r][c].getPlayer() == 1)
-                    playerOne++;
+                    white++;
 
                 if (tokens[r][c].getPlayer() == 2)
-                    playerTwo++;
+                    black++;
             }
         }
 
-        return playerOne == 0 || playerTwo == 0;
+        return white == 0 || black == 0;
     }
 
     public LinkedList<TokenModel> getPlayable(TokenModel selectedToken) {
