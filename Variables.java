@@ -2,20 +2,20 @@
 
 public enum Variables {
 
-    variable(0);
+	variable(0);
 
-    private int v;
+	private int v;
 
-    Variables(int v) {
-        this.setVariable(v);
-    }
+	Variables(int v) {
+		this.setVariable(v);
+	}
 
-    public int getVariable() {
-        return v;
-    }
+	public int getVariable() {
+		return this.v;
+	}
 
-    public void setVariable(int i) {
-        this.v = i;
-    }
+	public void setVariable(int i) {
+		this.v = i;
+	}
 
 }

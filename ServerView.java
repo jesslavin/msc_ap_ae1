@@ -1,164 +1,172 @@
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
 public class ServerView extends JFrame {
 
-    // create frame components
-    private JPanel jPanel;
-    private JTextArea textArea;
+	// create frame components
+	private JPanel jPanel;
+	private JTextArea textArea;
 
-    // sets network properties
-    private ServerSocket socket;
+	// sets network properties
+	private ServerSocket socket;
 
-    // formats elements and adds them to server window
-    public ServerView() {
-        jPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        textArea = new JTextArea();
-        jPanel.setBackground(Color.BLACK);
-        textArea.setBackground(Color.BLACK);
-        textArea.setEnabled(false);
-        add(jPanel);
-        jPanel.add(textArea);
-    }
+	// formats elements and adds them to server window
+	public ServerView() {
+		this.jPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		this.textArea = new JTextArea();
+		this.jPanel.setBackground(Color.BLACK);
+		this.textArea.setBackground(Color.BLACK);
+		this.textArea.setEnabled(false);
+		this.add(this.jPanel);
+		this.jPanel.add(this.textArea);
+	}
 
-    // establishes a connection and waits for clients to join
-    public void start() {
-        try {
-            ReadFile properties = ReadFile.getProperty();
-            int port = properties.getPort();
+	// establishes a connection and waits for clients to join
+	public void start() {
+		try {
+			ReadFile properties = ReadFile.getProperty();
+			int port = properties.getPort();
 
-            // creates a new server socket
-            socket = new ServerSocket(port);
-            textArea.append("Server started at port " + port + " \n");
+			// creates a new server socket
+			this.socket = new ServerSocket(port);
+			this.textArea.append("Server started at port " + port + " \n");
 
-            while (true) {
+			while (true) {
 
-                // waits for first client to join server
-                Socket clientOne = socket.accept();
-                textArea.append("First player joined successfully at ");
-                textArea.append(clientOne.getInetAddress().getHostAddress() + "\n");
-                textArea.append("Waiting for second player... \n");
+				// waits for first client to join server
+				Socket clientOne = this.socket.accept();
+				this.textArea.append("First player joined successfully at ");
+				this.textArea.append(clientOne.getInetAddress().getHostAddress() + "\n");
+				this.textArea.append("Waiting for second player... \n");
 
-                // MOVE LATER
-                new DataOutputStream(clientOne.getOutputStream()).writeInt(Constants.white.getConstants());
+				// MOVE LATER
+				new DataOutputStream(clientOne.getOutputStream()).writeInt(Constants.white.getConstants());
 
-                // waits for second client to join server
-                Socket clientTwo = socket.accept();
-                textArea.append("Second player joined successfully at ");
-                textArea.append(clientTwo.getInetAddress().getHostAddress() + "\n");
-                textArea.append("Starting game... \n");
+				// waits for second client to join server
+				Socket clientTwo = this.socket.accept();
+				this.textArea.append("Second player joined successfully at ");
+				this.textArea.append(clientTwo.getInetAddress().getHostAddress() + "\n");
+				this.textArea.append("Starting game... \n");
 
-                // opens game windows for each player
-                new DataOutputStream(clientTwo.getOutputStream()).writeInt(Constants.black.getConstants());
+				// opens game windows for each player
+				new DataOutputStream(clientTwo.getOutputStream()).writeInt(Constants.black.getConstants());
 
-                // creates a new thread for this session of two players
-                Socket socketOne = clientOne;
-                Socket socketTwo = clientTwo;
-                Runnable thisSession = new Runnable() {
-                    private BoardModel draughts = new BoardModel();
-                    private PlayerModel white = new PlayerModel(socketOne);
-                    private PlayerModel black = new PlayerModel(socketTwo);
-                    private boolean continuePlay = true;
+				// creates a new thread for this session of two players
+				Socket socketOne = clientOne;
+				Socket socketTwo = clientTwo;
+				Runnable thisSession = new Runnable() {
+					private BoardModel draughts = new BoardModel();
+					private PlayerModel white = new PlayerModel(socketOne);
+					private PlayerModel black = new PlayerModel(socketTwo);
+					private boolean continuePlay = true;
 
-                    public void run() {
-                        try {
-                            white.getOutput(1);
-                            while (continuePlay) {
-                                // wait for player one to make their move
-                                int from = white.getInput();
-                                int to = white.getInput();
-                                // update board accordingly
-                                pass(from, to);
-                                updateBoard(from, to);
+					// passes data throwing exception when the connection is lost
+					private void pass(int to, int from) throws Exception {
+						if (to == 99 || from == 99) {
+							throw new Exception("Connection lost");
+						}
+					}
 
-                                // send this data to player two
-                                if (draughts.endPlay())
-                                    // notifies game is over
-                                    black.getOutput(Constants.loser.getConstants());
-                                int get = black.getOutput(from);
-                                int send = black.getOutput(to);
-                                pass(get, send);
+					@Override
+					public void run() {
+						try {
+							this.white.getOutput(1);
+							while (this.continuePlay) {
+								// wait for player one to make their move
+								int from = this.white.getInput();
+								int to = this.white.getInput();
+								// update board accordingly
+								this.pass(from, to);
+								this.updateBoard(from, to);
 
-                                // if game is over, break out
-                                if (draughts.endPlay()) {
-                                    white.getOutput(Constants.winner.getConstants());
-                                    continuePlay = false;
-                                    break;
-                                }
+								// send this data to player two
+								if (this.draughts.endPlay()) {
+									// notifies game is over
+									this.black.getOutput(Constants.loser.getConstants());
+								}
+								int get = this.black.getOutput(from);
+								int send = this.black.getOutput(to);
+								this.pass(get, send);
 
-                                // wait for player two to make their move
-                                from = black.getInput();
-                                to = black.getInput();
-                                // update board accordingly
-                                pass(from, to);
-                                updateBoard(from, to);
+								// if game is over, break out
+								if (this.draughts.endPlay()) {
+									this.white.getOutput(Constants.winner.getConstants());
+									this.continuePlay = false;
+									break;
+								}
 
-                                // send this data to player one
-                                if (draughts.endPlay()) {
-                                    // notifies game is over
-                                    white.getOutput(Constants.loser.getConstants());
-                                }
-                                get = white.getOutput(from);
-                                send = white.getOutput(to);
-                                pass(get, send);
+								// wait for player two to make their move
+								from = this.black.getInput();
+								to = this.black.getInput();
+								// update board accordingly
+								this.pass(from, to);
+								this.updateBoard(from, to);
 
-                                // if game is over, break out
-                                if (draughts.endPlay()) {
-                                    black.getOutput(Constants.winner.getConstants());
-                                    continuePlay = false;
-                                    break;
-                                }
-                            }
+								// send this data to player one
+								if (this.draughts.endPlay()) {
+									// notifies game is over
+									this.white.getOutput(Constants.loser.getConstants());
+								}
+								get = this.white.getOutput(from);
+								send = this.white.getOutput(to);
+								this.pass(get, send);
 
-                        } catch (Exception e) {
-                            System.out.println("Connection closed");
+								// if game is over, break out
+								if (this.draughts.endPlay()) {
+									this.black.getOutput(Constants.winner.getConstants());
+									this.continuePlay = false;
+									break;
+								}
+							}
 
-                            if (white.connected())
-                                white.closeConnection();
+						} catch (Exception e) {
+							System.out.println("Connection closed");
 
-                            if (black.connected())
-                                black.closeConnection();
+							if (this.white.connected()) {
+								this.white.closeConnection();
+							}
 
-                            return;
-                        }
-                    }
+							if (this.black.connected()) {
+								this.black.closeConnection();
+							}
 
-                    // passes data throwing exception when the connection is lost
-                    private void pass(int to, int from) throws Exception {
-                        if (to == 99 || from == 99) {
-                            throw new Exception("Connection lost");
-                        }
-                    }
+							return;
+						}
+					}
 
-                    // updates the board after each move
-                    private void updateBoard(int from, int to) {
-                        TokenController fromToken = draughts.getToken(from);
-                        TokenController toToken = draughts.getToken(to);
-                        toToken.setPlayerID(fromToken.getPlayer());
-                        fromToken.setPlayerID(Constants.empty.getConstants());
-                        takeToken(fromToken, toToken);
-                    }
+					// method to remove token from board when taken by opposing player
+					private void takeToken(TokenController from, TokenController to) {
+						if (Math.abs(from.getTokenRow() - to.getTokenRow()) == 2) {
+							int middleRow = (from.getTokenRow() + to.getTokenRow()) / 2;
+							int middleColumn = (from.getTokenColumn() + to.getTokenColumn()) / 2;
+							TokenController middleToken = this.draughts.getToken((middleRow * 8) + middleColumn + 1);
+							middleToken.setPlayerID(Constants.empty.getConstants());
+						}
+					}
 
-                    // method to remove token from board when taken by opposing player
-                    private void takeToken(TokenController from, TokenController to) {
-                        if (Math.abs(from.getTokenRow() - to.getTokenRow()) == 2) {
-                            int middleRow = (from.getTokenRow() + to.getTokenRow()) / 2;
-                            int middleColumn = (from.getTokenColumn() + to.getTokenColumn()) / 2;
-                            TokenController middleToken = draughts.getToken((middleRow * 8) + middleColumn + 1);
-                            middleToken.setPlayerID(Constants.empty.getConstants());
-                        }
-                    }
-                };
-                // starts a new thread to handle particular session
-                new Thread(thisSession).start();
-            }
+					// updates the board after each move
+					private void updateBoard(int from, int to) {
+						TokenController fromToken = this.draughts.getToken(from);
+						TokenController toToken = this.draughts.getToken(to);
+						toToken.setPlayerID(fromToken.getPlayer());
+						fromToken.setPlayerID(Constants.empty.getConstants());
+						this.takeToken(fromToken, toToken);
+					}
+				};
+				// starts a new thread to handle particular session
+				new Thread(thisSession).start();
+			}
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(0);
-        }
-    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
+	}
 }

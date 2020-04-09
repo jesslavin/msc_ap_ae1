@@ -1,86 +1,86 @@
 public class TokenController {
 
-    private int tokenID;
-    private int tokenRow;
-    private int tokenColumn;
-    private boolean king;
-    private boolean empty;
-    private boolean selected;
-    private boolean movable;
-    private int playerID;
+	private int tokenID;
+	private int tokenRow;
+	private int tokenColumn;
+	private boolean king;
+	private boolean empty;
+	private boolean selected;
+	private boolean movable;
+	private int playerID;
 
-    public TokenController(int tokenID, int tokenRow, int tokenColumn, boolean present) {
-        this.tokenID = tokenID;
-        this.tokenRow = tokenRow;
-        this.tokenColumn = tokenColumn;
-        this.Token(present);
+	public TokenController(int tokenID, int tokenRow, int tokenColumn, boolean present) {
+		this.tokenID = tokenID;
+		this.tokenRow = tokenRow;
+		this.tokenColumn = tokenColumn;
+		this.Token(present);
 
-        if (this.empty) {
-            this.playerID = Constants.empty.getConstants();
-        }
+		if (this.empty) {
+			this.playerID = Constants.empty.getConstants();
+		}
 
-        this.king = false;
-        this.selected = false;
-        this.movable = false;
-    }
+		this.king = false;
+		this.selected = false;
+		this.movable = false;
+	}
 
-    public boolean present() {
-        return empty;
-    }
+	public int getPlayer() {
+		return this.playerID;
+	}
 
-    private void Token(boolean empty) {
-        this.empty = empty;
-    }
+	public int getTokenColumn() {
+		return this.tokenColumn;
+	}
 
-    public void setPlayerID(int playerID) {
-        this.playerID = playerID;
-    }
+	public int getTokenID() {
+		return this.tokenID;
+	}
 
-    public int getPlayer() {
-        return this.playerID;
-    }
+	public int getTokenRow() {
+		return this.tokenRow;
+	}
 
-    public int getTokenID() {
-        return this.tokenID;
-    }
+	public boolean isSelected() {
+		return this.selected;
+	}
 
-    public int getTokenRow() {
-        return this.tokenRow;
-    }
+	public boolean king() {
+		return this.king;
+	}
 
-    public int getTokenColumn() {
-        return this.tokenColumn;
-    }
+	public void makeKing() {
+		this.king = true;
+	}
 
-    public boolean isSelected() {
-        return selected;
-    }
+	public boolean moveable() {
+		return this.movable;
+	}
 
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
+	public void moveable(boolean moveable) {
+		this.movable = moveable;
+	}
 
-    public boolean moveable() {
-        return movable;
-    }
+	public boolean opponent() {
+		return this.playerID != Variables.variable.getVariable() && this.playerID != Constants.empty.getConstants();
+	}
 
-    public void moveable(boolean moveable) {
-        this.movable = moveable;
-    }
+	public boolean present() {
+		return this.empty;
+	}
 
-    public boolean opponent() {
-        return playerID != Variables.variable.getVariable() && playerID != Constants.empty.getConstants();
-    }
+	public void removeKing() {
+		this.king = false;
+	}
 
-    public boolean king() {
-        return king;
-    }
+	public void setPlayerID(int playerID) {
+		this.playerID = playerID;
+	}
 
-    public void makeKing() {
-        this.king = true;
-    }
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
 
-    public void removeKing() {
-        this.king = false;
-    }
+	private void Token(boolean empty) {
+		this.empty = empty;
+	}
 }

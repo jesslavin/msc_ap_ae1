@@ -1,108 +1,113 @@
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JPanel;
+
 public class BoardView extends JPanel {
 
-    private TokenController token;
-    private boolean hover;
-    private MouseHandler handler;
+	class MouseHandler extends MouseAdapter {
 
-    //Constructor
-    public BoardView(TokenController token) {
-        this.token = token;
-        this.hover = false;
-        handler = new MouseHandler();
-        setListener();
-    }
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			super.mouseEntered(e);
+			BoardView.this.hover = true;
+			BoardView.this.repaint();
+		}
 
-    protected void paintComponent(Graphics graphics) {
-        Graphics2D gameGraphics = (Graphics2D) graphics;
-        super.paintComponents(gameGraphics);
+		@Override
+		public void mouseExited(MouseEvent e) {
+			super.mouseExited(e);
+			BoardView.this.hover = false;
+			BoardView.this.repaint();
+		}
 
-        // creates a pink checkerboard
-        gameGraphics.setColor(BoardColours.pink.getColour());
-        if (token.present()) {
-            gameGraphics.fillRect(0, 0, getWidth(), getHeight());
-        }
+	}
+	private TokenController token;
+	private boolean hover;
 
-        // fills in token colours for each player
-        int playerID = token.getPlayer();
-        // changes to red if clicked
-        if (isSelected()) {
-            gameGraphics.setColor(BoardColours.setActiveColour());
-            paint(gameGraphics);
-        } else {
-            if (playerID == 1 || playerID == 2) {
-                // changes to red if hovered over
-                if (hover) {
-                    gameGraphics.setColor(BoardColours.setActiveColour());
-                } else {
-                    // otherwise set to player token colour
-                    gameGraphics.setColor(BoardColours.setPlayerColour(playerID));
-                }
-                paint(gameGraphics);
-            }
-        }
+	private MouseHandler handler;
 
-        // additional graphics for king tokens
-        if (token.king() && token.present()) {
-            gameGraphics.setFont(new Font("Georgia", Font.BOLD, 20));
-            gameGraphics.setColor(Color.PINK);
-            gameGraphics.drawString("K", getWidth() / 2 - 8, getHeight() / 2 + 8);
-        }
-    }
+	// Constructor
+	public BoardView(TokenController token) {
+		this.token = token;
+		this.hover = false;
+		this.handler = new MouseHandler();
+		this.setListener();
+	}
 
-    public void setListener() {
-        if (token.moveable() || token.getPlayer() == Variables.variable.getVariable()) {
-            this.removeMouseListener(handler);
-            this.addMouseListener(handler);
-        } else {
-            this.removeMouseListener(handler);
-        }
-    }
+	// return token
+	public TokenController getToken() {
+		return this.token;
+	}
 
-    public void setListener(MouseListener mouseListener) {
-        setListener();
-        if (token.moveable() || token.getPlayer() == Variables.variable.getVariable()) {
-            this.removeMouseListener(mouseListener);
-            this.addMouseListener(mouseListener);
-        } else {
-            this.removeMouseListener(mouseListener);
-        }
-    }
+	// return selected token
+	public boolean isSelected() {
+		return this.token.isSelected();
+	}
 
-    // return token
-    public TokenController getToken() {
-        return this.token;
-    }
+	private void paint(Graphics2D gameGraphics) {
+		int padding = 24;
+		gameGraphics.fillOval(padding / 2, padding / 2, this.getWidth() - padding, this.getHeight() - padding);
+	}
 
-    // return selected token
-    public boolean isSelected() {
-        return this.token.isSelected();
-    }
+	@Override
+	protected void paintComponent(Graphics graphics) {
+		Graphics2D gameGraphics = (Graphics2D) graphics;
+		super.paintComponents(gameGraphics);
 
+		// creates a pink checkerboard
+		gameGraphics.setColor(BoardColours.pink.getColour());
+		if (this.token.present()) {
+			gameGraphics.fillRect(0, 0, this.getWidth(), this.getHeight());
+		}
 
-    private void paint(Graphics2D gameGraphics) {
-        int padding = 24;
-        gameGraphics.fillOval(padding / 2, padding / 2, getWidth() - padding, getHeight() - padding);
-    }
+		// fills in token colours for each player
+		int playerID = this.token.getPlayer();
+		// changes to red if clicked
+		if (this.isSelected()) {
+			gameGraphics.setColor(BoardColours.setActiveColour());
+			this.paint(gameGraphics);
+		} else {
+			if (playerID == 1 || playerID == 2) {
+				// changes to red if hovered over
+				if (this.hover) {
+					gameGraphics.setColor(BoardColours.setActiveColour());
+				} else {
+					// otherwise set to player token colour
+					gameGraphics.setColor(BoardColours.setPlayerColour(playerID));
+				}
+				this.paint(gameGraphics);
+			}
+		}
 
+		// additional graphics for king tokens
+		if (this.token.king() && this.token.present()) {
+			gameGraphics.setFont(new Font("Georgia", Font.BOLD, 20));
+			gameGraphics.setColor(Color.PINK);
+			gameGraphics.drawString("K", this.getWidth() / 2 - 8, this.getHeight() / 2 + 8);
+		}
+	}
 
-    class MouseHandler extends MouseAdapter {
+	public void setListener() {
+		if (this.token.moveable() || this.token.getPlayer() == Variables.variable.getVariable()) {
+			this.removeMouseListener(this.handler);
+			this.addMouseListener(this.handler);
+		} else {
+			this.removeMouseListener(this.handler);
+		}
+	}
 
-        public void mouseEntered(MouseEvent e) {
-            super.mouseEntered(e);
-            hover = true;
-            repaint();
-        }
-
-        public void mouseExited(MouseEvent e) {
-            super.mouseExited(e);
-            hover = false;
-            repaint();
-        }
-
-    }
+	public void setListener(MouseListener mouseListener) {
+		this.setListener();
+		if (this.token.moveable() || this.token.getPlayer() == Variables.variable.getVariable()) {
+			this.removeMouseListener(mouseListener);
+			this.addMouseListener(mouseListener);
+		} else {
+			this.removeMouseListener(mouseListener);
+		}
+	}
 }
