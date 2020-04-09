@@ -1,7 +1,4 @@
-package mvc_view;
-
-import done.DraughtsController;
-import done.TokenController;
+package done;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
