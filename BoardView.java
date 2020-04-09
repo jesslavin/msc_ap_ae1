@@ -1,10 +1,3 @@
-package done;
-
-import done.BoardColours;
-import done.MouseListener;
-import done.Variables;
-import done.TokenController;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;

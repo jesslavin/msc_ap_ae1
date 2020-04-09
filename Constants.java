@@ -1,5 +1,3 @@
-package done;
-
 // declares list of colours to be used during game
 
 public enum Constants {
