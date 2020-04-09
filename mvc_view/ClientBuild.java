@@ -1,7 +1,7 @@
 package mvc_view;
 
 import done.ReadFile;
-import mvc_controller.DraughtsController;
+import done.DraughtsController;
 import mvc_model.PlayerModel;
 
 import javax.swing.*;

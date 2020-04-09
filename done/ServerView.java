@@ -2,7 +2,6 @@ package done;
 
 import mvc_model.BoardModel;
 import mvc_model.PlayerModel;
-import mvc_model.TokenModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -81,7 +80,7 @@ public class ServerView extends JFrame {
                                 updateBoard(from, to);
 
                                 // send this data to player two
-                                if (draughts.isOver())
+                                if (draughts.endPlay())
                                     // notifies game is over
                                     black.getOutput(Constants.loser.getConstants());
                                 int get = black.getOutput(from);
@@ -89,7 +88,7 @@ public class ServerView extends JFrame {
                                 pass(get, send);
 
                                 // if game is over, break out
-                                if (draughts.isOver()) {
+                                if (draughts.endPlay()) {
                                     white.getOutput(Constants.winner.getConstants());
                                     continuePlay = false;
                                     break;
@@ -103,7 +102,7 @@ public class ServerView extends JFrame {
                                 updateBoard(from, to);
 
                                 // send this data to player one
-                                if (draughts.isOver()) {
+                                if (draughts.endPlay()) {
                                     // notifies game is over
                                     white.getOutput(Constants.loser.getConstants());
                                 }
@@ -112,7 +111,7 @@ public class ServerView extends JFrame {
                                 pass(get, send);
 
                                 // if game is over, break out
-                                if (draughts.isOver()) {
+                                if (draughts.endPlay()) {
                                     black.getOutput(Constants.winner.getConstants());
                                     continuePlay = false;
                                     break;
@@ -141,19 +140,19 @@ public class ServerView extends JFrame {
 
                     // updates the board after each move
                     private void updateBoard(int from, int to) {
-                        TokenModel fromToken = draughts.getToken(from);
-                        TokenModel toToken = draughts.getToken(to);
+                        TokenController fromToken = draughts.getToken(from);
+                        TokenController toToken = draughts.getToken(to);
                         toToken.setPlayerID(fromToken.getPlayer());
                         fromToken.setPlayerID(Constants.empty.getConstants());
                         takeToken(fromToken, toToken);
                     }
 
                     // method to remove token from board when taken by opposing player
-                    private void takeToken(TokenModel from, TokenModel to) {
+                    private void takeToken(TokenController from, TokenController to) {
                         if (Math.abs(from.getTokenRow() - to.getTokenRow()) == 2) {
                             int middleRow = (from.getTokenRow() + to.getTokenRow()) / 2;
                             int middleColumn = (from.getTokenColumn() + to.getTokenColumn()) / 2;
-                            TokenModel middleToken = draughts.getToken((middleRow * 8) + middleColumn + 1);
+                            TokenController middleToken = draughts.getToken((middleRow * 8) + middleColumn + 1);
                             middleToken.setPlayerID(Constants.empty.getConstants());
                         }
                     }

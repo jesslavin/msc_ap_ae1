@@ -1,7 +1,7 @@
 package mvc_view;
 
-import mvc_controller.DraughtsController;
-import mvc_model.TokenModel;
+import done.DraughtsController;
+import done.TokenController;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 
 public class MouseListener extends MouseAdapter {
 
-    private TokenView token;
+    private BoardView token;
     private DraughtsController controller;
 
     public void addListener(DraughtsController c) {
@@ -34,8 +34,8 @@ public class MouseListener extends MouseAdapter {
     // Event called upon by mouse click, selects and deselects tokens
     private void selectToken(MouseEvent event) {
         try {
-            token = (TokenView) event.getSource();
-            TokenModel s = token.getToken();
+            token = (BoardView) event.getSource();
+            TokenController s = token.getToken();
 
             // if token is already selected - deselect
             if (s.isSelected()) {

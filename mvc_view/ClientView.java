@@ -2,7 +2,7 @@ package mvc_view;
 
 import done.Variables;
 import mvc_model.BoardModel;
-import mvc_model.TokenModel;
+import done.TokenController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,8 +13,8 @@ public class ClientView extends JPanel {
     private Dimension window = new Dimension(720, 720);
     private BoardModel board;
     private MouseListener listener;
-    private LinkedList<TokenView> token;
-    private TokenModel[][] tokens;
+    private LinkedList<BoardView> token;
+    private TokenController[][] tokens;
 
     public ClientView(MouseListener listener) {
         setPreferredSize(window);
@@ -22,7 +22,7 @@ public class ClientView extends JPanel {
 
         board = new BoardModel();
         this.listener = listener;
-        token = new LinkedList<TokenView>();
+        token = new LinkedList<BoardView>();
         tokens = board.getTokens();
 
         buildSquares();
@@ -31,8 +31,8 @@ public class ClientView extends JPanel {
     private void buildSquares() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                TokenView square = new TokenView(tokens[i][j]);
-                if (square.getToken().playable() || square.getToken().getPlayer() == Variables.variable.getVariable()) {
+                BoardView square = new BoardView(tokens[i][j]);
+                if (square.getToken().moveable() || square.getToken().getPlayer() == Variables.variable.getVariable()) {
                     square.addMouseListener(listener);
                 }
                 this.token.add(square);
@@ -42,17 +42,17 @@ public class ClientView extends JPanel {
     }
 
     public void play() {
-        for (TokenView square : token) {
+        for (BoardView square : token) {
             square.setListener(listener);
         }
         repaint();
     }
 
-    public LinkedList<TokenModel> playableToken(TokenModel token) {
-        return board.getPlayable(token);
+    public LinkedList<TokenController> playableToken(TokenController token) {
+        return board.playableTokens(token);
     }
 
-    public TokenModel getToken(int i) {
+    public TokenController getToken(int i) {
         return token.get(i - 1).getToken();
     }
 }

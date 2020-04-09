@@ -2,21 +2,21 @@ package mvc_view;
 
 import done.BoardColours;
 import done.Variables;
-import mvc_model.TokenModel;
+import done.TokenController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class TokenView extends JPanel {
+public class BoardView extends JPanel {
 
-    private TokenModel token;
+    private TokenController token;
     private boolean hover;
     private MouseHandler handler;
 
     //Constructor
-    public TokenView(TokenModel token) {
+    public BoardView(TokenController token) {
         this.token = token;
         this.hover = false;
         handler = new MouseHandler();
@@ -29,7 +29,7 @@ public class TokenView extends JPanel {
 
         // creates a pink checkerboard
         gameGraphics.setColor(BoardColours.pink.getColour());
-        if (token.filled()) {
+        if (token.present()) {
             gameGraphics.fillRect(0, 0, getWidth(), getHeight());
         }
 
@@ -53,7 +53,7 @@ public class TokenView extends JPanel {
         }
 
         // additional graphics for king tokens
-        if (token.king() && token.filled()) {
+        if (token.king() && token.present()) {
             gameGraphics.setFont(new Font("Georgia", Font.BOLD, 20));
             gameGraphics.setColor(Color.PINK);
             gameGraphics.drawString("K", getWidth() / 2 - 8, getHeight() / 2 + 8);
@@ -61,7 +61,7 @@ public class TokenView extends JPanel {
     }
 
     public void setListener() {
-        if (token.playable() || token.getPlayer() == Variables.variable.getVariable()) {
+        if (token.moveable() || token.getPlayer() == Variables.variable.getVariable()) {
             this.removeMouseListener(handler);
             this.addMouseListener(handler);
         } else {
@@ -71,7 +71,7 @@ public class TokenView extends JPanel {
 
     public void setListener(MouseListener mouseListener) {
         setListener();
-        if (token.playable() || token.getPlayer() == Variables.variable.getVariable()) {
+        if (token.moveable() || token.getPlayer() == Variables.variable.getVariable()) {
             this.removeMouseListener(mouseListener);
             this.addMouseListener(mouseListener);
         } else {
@@ -80,7 +80,7 @@ public class TokenView extends JPanel {
     }
 
     // return token
-    public TokenModel getToken() {
+    public TokenController getToken() {
         return this.token;
     }
 

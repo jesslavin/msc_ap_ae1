@@ -24,7 +24,7 @@ public class PlayerModel {
             output = new DataOutputStream(this.socket.getOutputStream());
 
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Unable to connect player, please try again");
+            JOptionPane.showMessageDialog(null, "Unable to connect player");
             System.exit(0);
         }
     }
@@ -58,11 +58,9 @@ public class PlayerModel {
         try {
             this.output.writeInt(i);
             return 1;
-            // Connection successful
         } catch (IOException e) {
-            System.out.println("Player not found");
+            System.out.println("Unable to find player");
             return 99;
-            // Connection failure
         }
     }
 
@@ -71,11 +69,9 @@ public class PlayerModel {
         try {
             i = this.input.readInt();
             return i;
-            // Connection successful
         } catch (IOException e) {
-            System.out.println("No response");
+            System.out.println("No response from player");
             return 99;
-            // Connection failure
         }
     }
 
