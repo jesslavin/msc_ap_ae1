@@ -73,7 +73,7 @@ public class PlayerModel {
 
     public void setPlayer(int player) {
         this.player = player;
-        PlayerID.PlayerID.setVariable(player);
+        APlayerID.PlayerID.setVariable(player);
     }
 
     public void activePlayer(boolean currentTurn) {

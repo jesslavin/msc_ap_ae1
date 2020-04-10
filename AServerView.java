@@ -6,7 +6,7 @@ import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ServerView extends JFrame {
+public class AServerView extends JFrame {
 
     // create frame components
     private JPanel jPanel;
@@ -16,7 +16,7 @@ public class ServerView extends JFrame {
     private ServerSocket socket;
 
     // formats elements and adds them to server window
-    public ServerView() {
+    public AServerView() {
         this.jPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         this.textArea = new JTextArea();
         this.jPanel.setBackground(Color.BLACK);
@@ -64,7 +64,7 @@ public class ServerView extends JFrame {
 
                     // passes data throwing exception when the connection is lost
                     private void pass(int to, int from) throws Exception {
-                        if (to == 99 || from == 99) {
+                        while (to == 99 || from == 99) {
                             throw new Exception("Connection lost");
                         }
                     }

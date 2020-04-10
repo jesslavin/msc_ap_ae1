@@ -83,8 +83,7 @@ public class DraughtsController implements Runnable {
         this.token.play();
     }
 
-    // allows player to make their move, check if this move is a jump, check whether
-    // token has become king, deselect token
+    // allows player to make their move, check if this move is a jump, check whether token has become king, deselect token
     public void makeMove(TokenController from, TokenController to) {
         to.setPlayerID(from.getPlayer());
         from.setPlayerID(0);
@@ -101,7 +100,6 @@ public class DraughtsController implements Runnable {
         }
     }
 
-    @Override
     public void run() {
         this.continuePlay = true;
         this.waitForAction = true;

@@ -9,12 +9,12 @@ public class ClientView extends JPanel {
     // instance variables
     private Dimension window = new Dimension(720, 720);
     private BoardModel board;
-    private MouseListener listener;
+    private AMouseListener listener;
     private LinkedList<BoardView> token;
     private TokenController[][] tokens;
 
     // constructor
-    public ClientView(MouseListener listener) {
+    public ClientView(AMouseListener listener) {
         this.setPreferredSize(this.window);
         this.setLayout(new GridLayout(8, 8));
         this.board = new BoardModel();
@@ -29,7 +29,7 @@ public class ClientView extends JPanel {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 BoardView square = new BoardView(this.tokens[i][j]);
-                if (square.getToken().moveable() || square.getToken().getPlayer() == PlayerID.PlayerID.getVariable()) {
+                if (square.getToken().moveable() || square.getToken().getPlayer() == APlayerID.PlayerID.getVariable()) {
                     square.addMouseListener(this.listener);
                 }
                 this.token.add(square);

@@ -6,7 +6,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class Client extends JFrame {
+public class AClient extends JFrame {
 
     // instance variables
     private PlayerModel player;
@@ -18,7 +18,7 @@ public class Client extends JFrame {
     private DataOutputStream output;
 
     // constructor
-    public Client() {
+    public AClient() {
         // fetches network properties and tries to connect each client/player
         try {
             this.server = AConfiguration.getServer();
@@ -37,7 +37,7 @@ public class Client extends JFrame {
     private void build(DraughtsController c) {
 
         // Creates new mouse listener and adds this to the controller
-        MouseListener listener = new MouseListener();
+        AMouseListener listener = new AMouseListener();
         listener.newController(c);
 
         // Sets up a new draughts board and with a mouse listener
@@ -55,7 +55,7 @@ public class Client extends JFrame {
             this.input = new DataInputStream(this.socket.getInputStream());
             this.output = new DataOutputStream(this.socket.getOutputStream());
 
-            // sets player ID first player = 1 second player = 2
+            // sets player ID white = 1 black = 2
             this.player.setPlayer(this.input.readInt());
 
             // calls on controller to start game creating new threads to serve each client/player
@@ -73,7 +73,7 @@ public class Client extends JFrame {
     public static void main(String[] args) {
 
         // creates a new client window
-        Client client = new Client();
+        AClient client = new AClient();
 
         // sets the size, location and visibly of client window
         client.setLocation(300, 0);

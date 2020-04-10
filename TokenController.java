@@ -65,7 +65,7 @@ public class TokenController {
     public void moveable(boolean moveable) { this.movable = moveable; }
 
     public boolean opponent() {
-        return this.playerID != PlayerID.PlayerID.getVariable() && this.playerID != 0;
+        return this.playerID != APlayerID.PlayerID.getVariable() && this.playerID != 0;
     }
 
     public boolean present() {

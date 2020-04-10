@@ -78,7 +78,7 @@ public class BoardView extends JPanel {
     }
 
     public void setListener() {
-        if (this.token.moveable() || this.token.getPlayer() == PlayerID.PlayerID.getVariable()) {
+        if (this.token.moveable() || this.token.getPlayer() == APlayerID.PlayerID.getVariable()) {
             this.removeMouseListener(this.handler);
             this.addMouseListener(this.handler);
         } else {
@@ -86,8 +86,8 @@ public class BoardView extends JPanel {
         }
     }
 
-    public void setListener(MouseListener mouseListener) {
-        if (this.token.moveable() || this.token.getPlayer() == PlayerID.PlayerID.getVariable()) {
+    public void setListener(AMouseListener mouseListener) {
+        if (this.token.moveable() || this.token.getPlayer() == APlayerID.PlayerID.getVariable()) {
             this.removeMouseListener(mouseListener);
             this.addMouseListener(mouseListener);
         } else {

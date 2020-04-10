@@ -7,7 +7,7 @@ public class AServer {
     public static void main(String[] args) {
 
         // creates a new server window
-        ServerView server = new ServerView();
+        AServerView server = new AServerView();
 
         // sets the size, location and visibly of server window
         server.setLocation(0, 0);

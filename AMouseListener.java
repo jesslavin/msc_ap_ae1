@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class MouseListener extends MouseAdapter {
+public class AMouseListener extends MouseAdapter {
 
     // instance variables
     private BoardView token;
