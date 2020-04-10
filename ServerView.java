@@ -1,3 +1,5 @@
+// Jessica Lavin - 2495543L
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.DataOutputStream;
@@ -27,8 +29,7 @@ public class ServerView extends JFrame {
     // establishes a connection and waits for clients to join
     public void start() {
         try {
-            ReadFile properties = ReadFile.getProperty();
-            int port = properties.getPort();
+            int port = Configuration.getPort();
 
             // creates a new server socket
             this.socket = new ServerSocket(port);
@@ -42,9 +43,6 @@ public class ServerView extends JFrame {
                 this.textArea.append(clientOne.getInetAddress().getHostAddress() + "\n");
                 this.textArea.append("Waiting for second player... \n");
 
-                // MOVE LATER
-                new DataOutputStream(clientOne.getOutputStream()).writeInt(1);
-
                 // waits for second client to join server
                 Socket clientTwo = this.socket.accept();
                 this.textArea.append("Second player joined successfully at ");
@@ -52,6 +50,7 @@ public class ServerView extends JFrame {
                 this.textArea.append("Starting game... \n");
 
                 // opens game windows for each player
+                new DataOutputStream(clientOne.getOutputStream()).writeInt(1);
                 new DataOutputStream(clientTwo.getOutputStream()).writeInt(2);
 
                 // creates a new thread for this session of two players
@@ -70,7 +69,6 @@ public class ServerView extends JFrame {
                         }
                     }
 
-                    @Override
                     public void run() {
                         try {
                             this.white.getOutput(1);
@@ -140,9 +138,9 @@ public class ServerView extends JFrame {
                     // method to remove token from board when taken by opposing player
                     private void takeToken(TokenController from, TokenController to) {
                         if (Math.abs(from.getTokenRow() - to.getTokenRow()) == 2) {
-                            int middleRow = (from.getTokenRow() + to.getTokenRow()) / 2;
-                            int middleColumn = (from.getTokenColumn() + to.getTokenColumn()) / 2;
-                            TokenController middleToken = this.draughts.getToken((middleRow * 8) + middleColumn + 1);
+                            int row = (from.getTokenRow() + to.getTokenRow()) / 2;
+                            int column = (from.getTokenColumn() + to.getTokenColumn()) / 2;
+                            TokenController middleToken = this.draughts.getToken((row * 8) + column + 1);
                             middleToken.setPlayerID(0);
                         }
                     }

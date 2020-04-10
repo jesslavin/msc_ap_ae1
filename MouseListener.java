@@ -1,3 +1,5 @@
+// Jessica Lavin - 2495543L
+
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -8,15 +10,13 @@ public class MouseListener extends MouseAdapter {
     private BoardView token;
     private DraughtsController controller;
 
-    public void addListener(DraughtsController c) {
+    public void newController(DraughtsController c) {
         this.controller = c;
     }
 
-    @Override
     public void mousePressed(MouseEvent event) {
         super.mousePressed(event);
-        // If it a player's current turn let them select a token, else display wait for
-        // other player message
+        // If it a player's current turn let them select a token, else display wait for other player message
         try {
             if (this.controller.activePlayer()) {
                 this.selectToken(event);
@@ -24,7 +24,7 @@ public class MouseListener extends MouseAdapter {
                 JOptionPane.showMessageDialog(null, "Waiting for other player...");
             }
         } catch (Exception e) {
-            System.out.println("Error");
+            e.printStackTrace();
         }
     }
 
@@ -33,7 +33,6 @@ public class MouseListener extends MouseAdapter {
         try {
             this.token = (BoardView) event.getSource();
             TokenController t = this.token.getToken();
-
             // if token is already selected - deselect
             if (t.isSelected()) {
                 this.controller.deselectToken();
@@ -43,7 +42,7 @@ public class MouseListener extends MouseAdapter {
                 this.controller.selectToken(t);
             }
         } catch (Exception e) {
-            System.out.println("Error");
+            e.printStackTrace();
         }
     }
 }

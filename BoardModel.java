@@ -1,3 +1,5 @@
+// Jessica Lavin - 2495543L
+
 import java.util.LinkedList;
 
 public class BoardModel {

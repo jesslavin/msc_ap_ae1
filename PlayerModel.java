@@ -1,3 +1,5 @@
+// Jessica Lavin - 2495543L
+
 import javax.swing.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -13,8 +15,7 @@ public class PlayerModel {
     private boolean currentTurn;
 
     public PlayerModel() {
-        this.setTurn(false);
-
+        this.activePlayer(false);
     }
 
     public PlayerModel(Socket socket) {
@@ -52,19 +53,18 @@ public class PlayerModel {
             i = this.input.readInt();
             return i;
         } catch (IOException e) {
-            System.out.println("No response from player");
-            return 99;
+            e.printStackTrace();
         }
+        return i;
     }
 
     public int getOutput(int i) {
         try {
             this.output.writeInt(i);
-            return 1;
         } catch (IOException e) {
-            System.out.println("Unable to find player");
-            return 99;
+            e.printStackTrace();
         }
+        return i;
     }
 
     public int getPlayer() {
@@ -76,7 +76,7 @@ public class PlayerModel {
         PlayerID.PlayerID.setVariable(player);
     }
 
-    public void setTurn(boolean currentTurn) {
+    public void activePlayer(boolean currentTurn) {
         this.currentTurn = currentTurn;
     }
 }

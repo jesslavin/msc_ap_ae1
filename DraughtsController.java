@@ -109,7 +109,7 @@ public class DraughtsController implements Runnable {
         try {
             if (this.player.getPlayer() == 1) {
                 this.from.readInt();
-                this.player.setTurn(true);
+                this.player.activePlayer(true);
             }
 
             // while game is in progress allow players to make turns via serverInfo method
@@ -167,7 +167,7 @@ public class DraughtsController implements Runnable {
 
     // passes turn information to and from ending the game when winner/loser
     private void serverInfo() throws IOException {
-        this.player.setTurn(false);
+        this.player.activePlayer(false);
         int from = this.from.readInt();
         if (from == 0) {
             from = this.from.readInt();
@@ -196,7 +196,7 @@ public class DraughtsController implements Runnable {
 
     // sends thread to sleep while waiting for player action
     private void waitForPlayerAction() throws InterruptedException {
-        this.player.setTurn(true);
+        this.player.activePlayer(true);
         while (this.waitForAction) {
             Thread.sleep(100);
         }

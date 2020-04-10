@@ -1,3 +1,5 @@
+// Jessica Lavin - 2495543L
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -32,7 +34,6 @@ public class BoardView extends JPanel {
         gameGraphics.fillOval(padding / 2, padding / 2, this.getWidth() - padding, this.getHeight() - padding);
     }
 
-    @Override
     protected void paintComponent(Graphics graphics) {
         Graphics2D gameGraphics = (Graphics2D) graphics;
         super.paintComponents(gameGraphics);
@@ -96,14 +97,12 @@ public class BoardView extends JPanel {
 
     class MouseHandler extends MouseAdapter {
 
-        @Override
         public void mouseEntered(MouseEvent e) {
             super.mouseEntered(e);
             BoardView.this.hover = true;
             BoardView.this.repaint();
         }
 
-        @Override
         public void mouseExited(MouseEvent e) {
             super.mouseExited(e);
             BoardView.this.hover = false;
