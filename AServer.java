@@ -2,7 +2,7 @@
 
 import javax.swing.*;
 
-public class Server {
+public class AServer {
 
     public static void main(String[] args) {
 

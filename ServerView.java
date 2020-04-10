@@ -29,7 +29,7 @@ public class ServerView extends JFrame {
     // establishes a connection and waits for clients to join
     public void start() {
         try {
-            int port = Configuration.getPort();
+            int port = AConfiguration.getPort();
 
             // creates a new server socket
             this.socket = new ServerSocket(port);

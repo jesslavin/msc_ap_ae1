@@ -21,8 +21,8 @@ public class Client extends JFrame {
     public Client() {
         // fetches network properties and tries to connect each client/player
         try {
-            this.server = Configuration.getServer();
-            this.port = Configuration.getPort();
+            this.server = AConfiguration.getServer();
+            this.port = AConfiguration.getPort();
             this.player = new PlayerModel();
             this.connect();
             // catches errors and quits game if unable to connect
