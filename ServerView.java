@@ -47,7 +47,7 @@ public class ServerView extends JFrame {
 				this.textArea.append("Waiting for second player... \n");
 
 				// MOVE LATER
-				new DataOutputStream(clientOne.getOutputStream()).writeInt(Constants.white.getConstants());
+				new DataOutputStream(clientOne.getOutputStream()).writeInt(1);
 
 				// waits for second client to join server
 				Socket clientTwo = this.socket.accept();
@@ -56,7 +56,7 @@ public class ServerView extends JFrame {
 				this.textArea.append("Starting game... \n");
 
 				// opens game windows for each player
-				new DataOutputStream(clientTwo.getOutputStream()).writeInt(Constants.black.getConstants());
+				new DataOutputStream(clientTwo.getOutputStream()).writeInt(2);
 
 				// creates a new thread for this session of two players
 				Socket socketOne = clientOne;
@@ -89,7 +89,7 @@ public class ServerView extends JFrame {
 								// send this data to player two
 								if (this.draughts.endPlay()) {
 									// notifies game is over
-									this.black.getOutput(Constants.loser.getConstants());
+									this.black.getOutput(0);
 								}
 								int get = this.black.getOutput(from);
 								int send = this.black.getOutput(to);
@@ -97,7 +97,7 @@ public class ServerView extends JFrame {
 
 								// if game is over, break out
 								if (this.draughts.endPlay()) {
-									this.white.getOutput(Constants.winner.getConstants());
+									this.white.getOutput(1);
 									this.continuePlay = false;
 									break;
 								}
@@ -112,7 +112,7 @@ public class ServerView extends JFrame {
 								// send this data to player one
 								if (this.draughts.endPlay()) {
 									// notifies game is over
-									this.white.getOutput(Constants.loser.getConstants());
+									this.white.getOutput(0);
 								}
 								get = this.white.getOutput(from);
 								send = this.white.getOutput(to);
@@ -120,7 +120,7 @@ public class ServerView extends JFrame {
 
 								// if game is over, break out
 								if (this.draughts.endPlay()) {
-									this.black.getOutput(Constants.winner.getConstants());
+									this.black.getOutput(1);
 									this.continuePlay = false;
 									break;
 								}
@@ -147,7 +147,7 @@ public class ServerView extends JFrame {
 							int middleRow = (from.getTokenRow() + to.getTokenRow()) / 2;
 							int middleColumn = (from.getTokenColumn() + to.getTokenColumn()) / 2;
 							TokenController middleToken = this.draughts.getToken((middleRow * 8) + middleColumn + 1);
-							middleToken.setPlayerID(Constants.empty.getConstants());
+							middleToken.setPlayerID(0);
 						}
 					}
 
@@ -156,7 +156,7 @@ public class ServerView extends JFrame {
 						TokenController fromToken = this.draughts.getToken(from);
 						TokenController toToken = this.draughts.getToken(to);
 						toToken.setPlayerID(fromToken.getPlayer());
-						fromToken.setPlayerID(Constants.empty.getConstants());
+						fromToken.setPlayerID(0);
 						this.takeToken(fromToken, toToken);
 					}
 				};

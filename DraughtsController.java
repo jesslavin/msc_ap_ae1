@@ -47,7 +47,7 @@ public class DraughtsController implements Runnable {
 
 			// empties square with jumped token in
 			TokenController jumpedToken = this.token.getToken((r * 8) + c + 1);
-			jumpedToken.setPlayerID(Constants.empty.getConstants());
+			jumpedToken.setPlayerID(0);
 			jumpedToken.removeKing();
 		}
 	}
@@ -57,9 +57,9 @@ public class DraughtsController implements Runnable {
 		if (from.king()) {
 			tokenPlayed.makeKing();
 			from.removeKing();
-		} else if (tokenPlayed.getTokenRow() == 7 && tokenPlayed.getPlayer() == Constants.white.getConstants()) {
+		} else if (tokenPlayed.getTokenRow() == 7 && tokenPlayed.getPlayer() == 1) {
 			tokenPlayed.makeKing();
-		} else if (tokenPlayed.getTokenRow() == 0 && tokenPlayed.getPlayer() == Constants.black.getConstants()) {
+		} else if (tokenPlayed.getTokenRow() == 0 && tokenPlayed.getPlayer() == 2) {
 			tokenPlayed.makeKing();
 		}
 	}
@@ -86,7 +86,7 @@ public class DraughtsController implements Runnable {
 	// token has become king, deselect token
 	public void makeMove(TokenController from, TokenController to) {
 		to.setPlayerID(from.getPlayer());
-		from.setPlayerID(Constants.empty.getConstants());
+		from.setPlayerID(0);
 		this.checkJump(from, to);
 		this.checkKing(from, to);
 		this.deselectToken();
@@ -108,19 +108,19 @@ public class DraughtsController implements Runnable {
 
 		// player 1 (white) goes first
 		try {
-			if (this.player.getPlayer() == Constants.white.getConstants()) {
+			if (this.player.getPlayer() == 1) {
 				this.from.readInt();
 				this.player.setTurn(true);
 			}
 
 			// while game is in progress allow players to make turns via serverInfo method
 			while (this.continuePlay && !this.endPlay) {
-				if (this.player.getPlayer() == Constants.white.getConstants()) {
+				if (this.player.getPlayer() == 1) {
 					this.waitForPlayerAction();
 					if (!this.endPlay) {
 						this.serverInfo();
 					}
-				} else if (this.player.getPlayer() == Constants.black.getConstants()) {
+				} else if (this.player.getPlayer() == 2) {
 					this.serverInfo();
 					if (!this.endPlay) {
 						this.waitForPlayerAction();
@@ -170,12 +170,12 @@ public class DraughtsController implements Runnable {
 	private void serverInfo() throws IOException {
 		this.player.setTurn(false);
 		int from = this.from.readInt();
-		if (from == Constants.loser.getConstants()) {
+		if (from == 0) {
 			from = this.from.readInt();
 			int to = this.from.readInt();
 			this.update(from, to);
 			this.endPlay = true;
-		} else if (from == Constants.winner.getConstants()) {
+		} else if (from == 1) {
 			this.endPlay = true;
 			this.continuePlay = false;
 		} else {
@@ -189,7 +189,7 @@ public class DraughtsController implements Runnable {
 		TokenController fromToken = this.token.getToken(from);
 		TokenController toToken = this.token.getToken(to);
 		toToken.setPlayerID(fromToken.getPlayer());
-		fromToken.setPlayerID(Constants.empty.getConstants());
+		fromToken.setPlayerID(0);
 		this.checkJump(fromToken, toToken);
 		this.checkKing(fromToken, toToken);
 		this.token.play();

@@ -16,7 +16,7 @@ public class TokenController {
 		this.Token(present);
 
 		if (this.empty) {
-			this.playerID = Constants.empty.getConstants();
+			this.playerID = 0;
 		}
 
 		this.king = false;
@@ -61,7 +61,7 @@ public class TokenController {
 	}
 
 	public boolean opponent() {
-		return this.playerID != Variables.variable.getVariable() && this.playerID != Constants.empty.getConstants();
+		return this.playerID != Variables.variable.getVariable() && this.playerID != 0;
 	}
 
 	public boolean present() {

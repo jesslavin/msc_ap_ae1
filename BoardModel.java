@@ -15,9 +15,9 @@ public class BoardModel {
 		// player one gets rows 0-2
 		for (int r = 0; r < 3; r++) {
 			// columns
-			for (int c = 0; c < Constants.columns.getConstants(); c++) {
+			for (int c = 0; c < 8; c++) {
 				if (this.tokens[r][c].present()) {
-					this.tokens[r][c].setPlayerID(Constants.white.getConstants());
+					this.tokens[r][c].setPlayerID(1);
 				}
 			}
 		}
@@ -25,9 +25,9 @@ public class BoardModel {
 		// player two gets rows 5-7
 		for (int r = 5; r < 8; r++) {
 			// columns
-			for (int c = 0; c < Constants.columns.getConstants(); c++) {
+			for (int c = 0; c < 8; c++) {
 				if (this.tokens[r][c].present()) {
-					this.tokens[r][c].setPlayerID(Constants.black.getConstants());
+					this.tokens[r][c].setPlayerID(2);
 				}
 			}
 		}
@@ -38,8 +38,8 @@ public class BoardModel {
 
 		int white = 0;
 		int black = 0;
-		for (int r = 0; r < Constants.rows.getConstants(); r++) {
-			for (int c = 0; c < Constants.columns.getConstants(); c++) {
+		for (int r = 0; r < 8; r++) {
+			for (int c = 0; c < 8; c++) {
 				if (this.tokens[r][c].getPlayer() == 1) {
 					white++;
 				}
@@ -151,11 +151,11 @@ public class BoardModel {
 		int i = 0;
 
 		// rows
-		for (int r = 0; r < Constants.rows.getConstants(); r++) {
+		for (int r = 0; r < 8; r++) {
 			filled = r % 2 == 1;
 
 			// columns
-			for (int c = 0; c < Constants.columns.getConstants(); c++) {
+			for (int c = 0; c < 8; c++) {
 				existingToken = (filled && c % 2 == 0) || !filled && c % 2 == 1;
 				i++;
 

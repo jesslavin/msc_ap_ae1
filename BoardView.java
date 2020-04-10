@@ -50,7 +50,7 @@ public class BoardView extends JPanel {
 	}
 
 	private void paint(Graphics2D gameGraphics) {
-		int padding = 24;
+		int padding = 10;
 		gameGraphics.fillOval(padding / 2, padding / 2, this.getWidth() - padding, this.getHeight() - padding);
 	}
 
@@ -60,25 +60,31 @@ public class BoardView extends JPanel {
 		super.paintComponents(gameGraphics);
 
 		// creates a pink checkerboard
-		gameGraphics.setColor(BoardColours.pink.getColour());
 		if (this.token.present()) {
-			gameGraphics.fillRect(0, 0, this.getWidth(), this.getHeight());
+			gameGraphics.setColor(Color.PINK);
+		} else {
+			gameGraphics.setColor(Color.WHITE);
 		}
+		gameGraphics.fillRect(0, 0, this.getWidth(), this.getHeight());
 
 		// fills in token colours for each player
 		int playerID = this.token.getPlayer();
 		// changes to red if clicked
 		if (this.isSelected()) {
-			gameGraphics.setColor(BoardColours.setActiveColour());
+			gameGraphics.setColor(Color.RED);
 			this.paint(gameGraphics);
 		} else {
 			if (playerID == 1 || playerID == 2) {
 				// changes to red if hovered over
 				if (this.hover) {
-					gameGraphics.setColor(BoardColours.setActiveColour());
+					gameGraphics.setColor(Color.RED);
 				} else {
 					// otherwise set to player token colour
-					gameGraphics.setColor(BoardColours.setPlayerColour(playerID));
+					if (playerID == 1) {
+						gameGraphics.setColor(Color.WHITE);
+					} else {
+						gameGraphics.setColor(Color.BLACK);
+					}
 				}
 				this.paint(gameGraphics);
 			}
@@ -102,7 +108,6 @@ public class BoardView extends JPanel {
 	}
 
 	public void setListener(MouseListener mouseListener) {
-		this.setListener();
 		if (this.token.moveable() || this.token.getPlayer() == Variables.variable.getVariable()) {
 			this.removeMouseListener(mouseListener);
 			this.addMouseListener(mouseListener);
