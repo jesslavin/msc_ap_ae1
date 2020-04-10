@@ -67,14 +67,7 @@ public class DraughtsController implements Runnable {
         }
     }
 
-    public void deselectToken() {
-        for (TokenController token : this.selectedTokens) token.setSelected(false);
-        this.selectedTokens.clear();
-        for (TokenController token : this.playableTokens) token.moveable(false);
-        this.playableTokens.clear();
-        this.token.play();
-    }
-
+    // fetches player tokens
     private void getPlayableTokens(TokenController t) {
         this.playableTokens.clear();
         this.playableTokens = this.token.playableToken(t);
@@ -159,6 +152,7 @@ public class DraughtsController implements Runnable {
         this.getPlayableTokens(t);
     }
 
+    // select token logic
     public void selectToken(TokenController t) {
         if (!this.selectedTokens.isEmpty()) {
             if (this.selectedTokens.size() >= 1)
@@ -171,6 +165,15 @@ public class DraughtsController implements Runnable {
         } else {
             this.selected(t);
         }
+    }
+
+    // deselect token logic
+    public void deselectToken() {
+        for (TokenController token : this.selectedTokens) token.setSelected(false);
+        this.selectedTokens.clear();
+        for (TokenController token : this.playableTokens) token.moveable(false);
+        this.playableTokens.clear();
+        this.token.play();
     }
 
     // fetches and sends player moves

@@ -1,7 +1,10 @@
 // Jessica Lavin - 2495543L
 
+// class that acts as a controllers token logic communicating with the views and models
+
 public class TokenController {
 
+    // instance variables
     private int tokenID;
     private int tokenRow;
     private int tokenColumn;
@@ -11,6 +14,7 @@ public class TokenController {
     private boolean movable;
     private int playerID;
 
+    // constructor
     public TokenController(int tokenID, int tokenRow, int tokenColumn, boolean present) {
         this.tokenID = tokenID;
         this.tokenRow = tokenRow;

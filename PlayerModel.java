@@ -8,16 +8,19 @@ import java.net.Socket;
 
 public class PlayerModel {
 
+    // instance variables
     private Socket socket;
     private DataInputStream input;
     private DataOutputStream output;
     private int player;
     private boolean currentTurn;
 
+    // constructor
     public PlayerModel() {
         this.activePlayer(false);
     }
 
+    // creates the socket and connects players
     public PlayerModel(Socket socket) {
         this.socket = socket;
 
@@ -31,10 +34,17 @@ public class PlayerModel {
         }
     }
 
+    // handles player turns
     public boolean active() {
         return this.currentTurn;
     }
 
+    // handles player connections
+    public boolean connected() {
+        return this.socket.isConnected();
+    }
+
+    // closes the connection
     public void closeConnection() {
         try {
             this.socket.close();
@@ -43,10 +53,7 @@ public class PlayerModel {
         }
     }
 
-    public boolean connected() {
-        return this.socket.isConnected();
-    }
-
+    // fetches and passes player input
     public int getInput() {
         int i = 0;
         try {
@@ -67,10 +74,12 @@ public class PlayerModel {
         return i;
     }
 
+    // fetches current player
     public int getPlayer() {
         return this.player;
     }
 
+    // sets this player as the active player
     public void setPlayer(int player) {
         this.player = player;
         PlayerID.PlayerID.setVariable(player);

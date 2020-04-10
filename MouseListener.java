@@ -10,13 +10,14 @@ public class MouseListener extends MouseAdapter {
     private BoardView token;
     private DraughtsController controller;
 
+    // constructor
     public void newController(DraughtsController c) {
         this.controller = c;
     }
 
+    // If it a player's current turn let them select a token, else display wait for other player message
     public void mousePressed(MouseEvent event) {
         super.mousePressed(event);
-        // If it a player's current turn let them select a token, else display wait for other player message
         try {
             if (!this.controller.activePlayer()) {
                 JOptionPane.showMessageDialog(null, "Not your turn, please wait for opponents move");

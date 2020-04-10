@@ -2,13 +2,13 @@
 
 public class Configuration {
 
-    // returns the port set by the config file
+    // returns the port
     public static int getPort() {
         int port = 8765;
         return port;
     }
 
-    // returns the server set by the config file
+    // returns the server
     public static String getServer() {
         String server = "127.0.0.1";
         return server;
