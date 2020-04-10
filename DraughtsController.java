@@ -16,7 +16,7 @@ public class DraughtsController implements Runnable {
     private boolean endPlay;
     private DataInputStream from;
     private DataOutputStream to;
-    private ClientView token;
+    private AClientView token;
     private PlayerModel player;
     private LinkedList<TokenController> selectedTokens;
     private LinkedList<TokenController> playableTokens;
@@ -36,7 +36,7 @@ public class DraughtsController implements Runnable {
     }
 
     // returns the currently active token
-    public void activeToken(ClientView token) {
+    public void activeToken(AClientView token) {
         this.token = token;
     }
 
