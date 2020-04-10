@@ -5,13 +5,13 @@ import java.util.LinkedList;
 public class BoardModel {
 
     // instance variables
-    private TokenController[][] tokens;
+    private final TokenController[][] tokens;
 
     // constructor
     public BoardModel() {
-        this.tokens = new TokenController[8][8];
-        this.setTokens();
-        this.assignTokens();
+        tokens = new TokenController[8][8];
+        setTokens();
+        assignTokens();
     }
 
     // assigns players spaces on the board
@@ -20,12 +20,12 @@ public class BoardModel {
         // player one gets rows 0-2
         for (int r = 0; r < 3; r++)
             for (int c = 0; c < 8; c++)
-                if (this.tokens[r][c].present()) this.tokens[r][c].setPlayerID(1);
+                if (tokens[r][c].present()) tokens[r][c].setPlayerID(1);
 
         // player two gets rows 5-7
         for (int r = 5; r < 8; r++)
             for (int c = 0; c < 8; c++)
-                if (this.tokens[r][c].present()) this.tokens[r][c].setPlayerID(2);
+                if (tokens[r][c].present()) tokens[r][c].setPlayerID(2);
     }
 
     // initialize 64 squares with ID, row, column whether or not they are filled with a token
@@ -39,10 +39,10 @@ public class BoardModel {
 
             // columns
             for (int c = 0; c < 8; c++) {
-                existingToken = (filled && c % 2 == 0) || !filled && c % 2 == 1;
+                existingToken = filled ? c % 2 == 0 : c % 2 == 1;
                 i++;
 
-                this.tokens[r][c] = new TokenController(i, r, c, existingToken);
+                tokens[r][c] = new TokenController(i, r, c, existingToken);
             }
         }
     }
@@ -54,23 +54,23 @@ public class BoardModel {
         int black = 0;
         for (int r = 0; r < 8; r++)
             for (int c = 0; c < 8; c++) {
-                if (this.tokens[r][c].getPlayer() == 1) white++;
-                if (this.tokens[r][c].getPlayer() == 2) black++;
+                if (tokens[r][c].getPlayer() == 1) white++;
+                if (tokens[r][c].getPlayer() == 2) black++;
             }
         return white == 0 || black == 0;
     }
 
     // fetches individual tokens
-    public TokenController getToken(int from) {
-        for (TokenController[] tokenRow : this.tokens)
-            for (TokenController token : tokenRow)
+    public TokenController getToken(final int from) {
+        for (final TokenController[] tokenRow : tokens)
+            for (final TokenController token : tokenRow)
                 if (token.getTokenID() == from) return token;
         return null;
     }
 
     // returns this token
     public TokenController[][] getTokens() {
-        return this.tokens;
+        return tokens;
     }
 
     // frontTokens, jump, opponentPresent and playableTokens check if the selected token can be moved and how it can be moved
@@ -78,14 +78,14 @@ public class BoardModel {
     // force jump functionality unfulfilled
     // unhappy with final logic, feels bulky
 
-    private void frontTokens(LinkedList<TokenController> tokens, int movable, int selectedColumn) {
+    private void frontTokens(final LinkedList<TokenController> tokens, final int movable, final int selectedColumn) {
 
         if (movable < 0 || movable >= 8) {
             return;
         }
         if (selectedColumn < 0 || selectedColumn >= 7) {
         } else {
-            TokenController right = this.tokens[movable][selectedColumn + 1];
+            final TokenController right = this.tokens[movable][selectedColumn + 1];
             if (right.getPlayer() == 0) {
                 right.moveable(true);
                 tokens.add(right);
@@ -93,14 +93,14 @@ public class BoardModel {
         }
 
         if (selectedColumn <= 0 || selectedColumn > 8) return;
-        TokenController left = this.tokens[movable][selectedColumn - 1];
+        final TokenController left = this.tokens[movable][selectedColumn - 1];
         if (left.getPlayer() != 0) return;
         left.moveable(true);
         tokens.add(left);
     }
 
 
-    private void jump(LinkedList<TokenController> tokens, int movable, int selectedColumn, int row) {
+    private void jump(final LinkedList<TokenController> tokens, final int movable, final int selectedColumn, final int row) {
 
         int column;
 
@@ -109,9 +109,9 @@ public class BoardModel {
         }
         if (selectedColumn < 0 || selectedColumn >= 6) {
         } else {
-            TokenController right = this.tokens[movable][selectedColumn + 2];
+            final TokenController right = this.tokens[movable][selectedColumn + 2];
             column = (selectedColumn + selectedColumn + 2) / 2;
-            if (right.getPlayer() == 0 && this.opponentPresent(row, column)) {
+            if (right.getPlayer() == 0 && opponentPresent(row, column)) {
                 right.moveable(true);
                 tokens.add(right);
             }
@@ -120,24 +120,24 @@ public class BoardModel {
         if (selectedColumn <= 1 || selectedColumn > 7) {
             return;
         }
-        TokenController left = this.tokens[movable][selectedColumn - 2];
+        final TokenController left = this.tokens[movable][selectedColumn - 2];
         column = (selectedColumn + selectedColumn - 2) / 2;
-        if (left.getPlayer() == 0 && this.opponentPresent(row, column)) {
+        if (left.getPlayer() == 0 && opponentPresent(row, column)) {
             left.moveable(true);
             tokens.add(left);
         }
     }
 
-    private boolean opponentPresent(int row, int column) {
-        return this.tokens[row][column].opponent();
+    private boolean opponentPresent(final int row, final int column) {
+        return tokens[row][column].opponent();
     }
 
-    public LinkedList<TokenController> playableTokens(TokenController selectedToken) {
+    public LinkedList<TokenController> playableTokens(final TokenController selectedToken) {
 
-        LinkedList<TokenController> playableTokens = new LinkedList<>();
+        final LinkedList<TokenController> playableTokens = new LinkedList<>();
 
-        int selectedRow = selectedToken.getTokenRow();
-        int selectedColumn = selectedToken.getTokenColumn();
+        final int selectedRow = selectedToken.getTokenRow();
+        final int selectedColumn = selectedToken.getTokenColumn();
 
         int movable;
         if (selectedToken.getPlayer() != 1) {
@@ -146,12 +146,12 @@ public class BoardModel {
             movable = selectedRow + 1;
         }
 
-        this.frontTokens(playableTokens, movable, selectedColumn);
+        frontTokens(playableTokens, movable, selectedColumn);
         if (selectedToken.getPlayer() != 1) {
-            this.jump(playableTokens, movable - 1, selectedColumn,
+            jump(playableTokens, movable - 1, selectedColumn,
                     movable);
         } else {
-            this.jump(playableTokens, movable + 1, selectedColumn,
+            jump(playableTokens, movable + 1, selectedColumn,
                     movable);
         }
         if (!selectedToken.king()) {
@@ -159,8 +159,8 @@ public class BoardModel {
         }
         if (selectedToken.getPlayer() == 1) movable = selectedRow - 1;
         else movable = selectedRow + 1;
-        this.frontTokens(playableTokens, movable, selectedColumn);
-        this.jump(playableTokens, (selectedToken.getPlayer() == 1) ? movable - 1 : movable + 1, selectedColumn, movable);
+        frontTokens(playableTokens, movable, selectedColumn);
+        jump(playableTokens, (selectedToken.getPlayer() == 1) ? movable - 1 : movable + 1, selectedColumn, movable);
         return playableTokens;
     }
 

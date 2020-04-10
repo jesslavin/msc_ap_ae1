@@ -11,38 +11,38 @@ public class MouseListener extends MouseAdapter {
     private DraughtsController controller;
 
     // constructor
-    public void newController(DraughtsController c) {
-        this.controller = c;
+    public void newController(final DraughtsController c) {
+        controller = c;
     }
 
     // If it a player's current turn let them select a token, else display wait for other player message
-    public void mousePressed(MouseEvent event) {
+    public void mousePressed(final MouseEvent event) {
         super.mousePressed(event);
         try {
-            if (!this.controller.activePlayer()) {
+            if (!controller.activePlayer()) {
                 JOptionPane.showMessageDialog(null, "Not your turn, please wait for opponents move");
             } else {
-                this.selectToken(event);
+                selectToken(event);
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
 
     // Event called upon by mouse click, selects and deselects tokens
-    private void selectToken(MouseEvent event) {
+    private void selectToken(final MouseEvent event) {
         try {
-            this.token = (BoardView) event.getSource();
-            TokenController t = this.token.getToken();
+            token = (BoardView) event.getSource();
+            final TokenController t = token.getToken();
             // if token is already selected - deselect
             if (!t.isSelected()) {
-                this.controller.selectToken(t);
+                controller.selectToken(t);
             }
             // else select
             else {
-                this.controller.deselectToken();
+                controller.deselectToken();
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }

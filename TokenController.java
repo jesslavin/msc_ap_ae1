@@ -5,9 +5,9 @@
 public class TokenController {
 
     // instance variables
-    private int tokenID;
-    private int tokenRow;
-    private int tokenColumn;
+    private final int tokenID;
+    private final int tokenRow;
+    private final int tokenColumn;
     private boolean king;
     private boolean empty;
     private boolean selected;
@@ -15,76 +15,78 @@ public class TokenController {
     private int playerID;
 
     // constructor
-    public TokenController(int tokenID, int tokenRow, int tokenColumn, boolean present) {
+    public TokenController(final int tokenID, final int tokenRow, final int tokenColumn, final boolean present) {
         this.tokenID = tokenID;
         this.tokenRow = tokenRow;
         this.tokenColumn = tokenColumn;
-        this.Token(present);
+        Token(present);
 
-        if (this.empty) {
-            this.playerID = 0;
+        if (empty) {
+            playerID = 0;
         }
 
-        this.king = false;
-        this.selected = false;
-        this.movable = false;
+        king = false;
+        selected = false;
+        movable = false;
     }
 
     public int getPlayer() {
-        return this.playerID;
+        return playerID;
     }
 
     public int getTokenColumn() {
-        return this.tokenColumn;
+        return tokenColumn;
     }
 
     public int getTokenID() {
-        return this.tokenID;
+        return tokenID;
     }
 
     public int getTokenRow() {
-        return this.tokenRow;
+        return tokenRow;
     }
 
     public boolean isSelected() {
-        return this.selected;
+        return selected;
     }
 
-    public void setSelected(boolean selected) {
+    public void setSelected(final boolean selected) {
         this.selected = selected;
     }
 
     public boolean king() {
-        return this.king;
+        return king;
     }
 
     public void makeKing() {
-        this.king = true;
+        king = true;
     }
 
     public boolean moveable() {
-        return this.movable;
+        return movable;
     }
 
-    public void moveable(boolean moveable) { this.movable = moveable; }
+    public void moveable(final boolean moveable) {
+        movable = moveable;
+    }
 
     public boolean opponent() {
-        return this.playerID != PlayerID.PlayerID.getVariable() && this.playerID != 0;
+        return playerID != PlayerID.PlayerID.getVariable() && playerID != 0;
     }
 
     public boolean present() {
-        return this.empty;
+        return empty;
     }
 
     public void removeKing() {
-        this.king = false;
+        king = false;
     }
 
-    public void setPlayerID(int playerID) {
+    public void setPlayerID(final int playerID) {
         this.playerID = playerID;
     }
 
-    private void Token(boolean empty) {
+    private void Token(final boolean empty) {
         this.empty = empty;
     }
 }

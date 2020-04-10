@@ -14,48 +14,48 @@ public class DraughtsController implements Runnable {
     private boolean continuePlay;
     private boolean waitForAction;
     private boolean endPlay;
-    private DataInputStream from;
-    private DataOutputStream to;
+    private final DataInputStream from;
+    private final DataOutputStream to;
     private ClientView token;
-    private PlayerModel player;
-    private LinkedList<TokenController> selectedTokens;
+    private final PlayerModel player;
+    private final LinkedList<TokenController> selectedTokens;
     private LinkedList<TokenController> playableTokens;
 
     // constructor
-    public DraughtsController(PlayerModel player, DataInputStream input, DataOutputStream output) {
+    public DraughtsController(final PlayerModel player, final DataInputStream input, final DataOutputStream output) {
         this.player = player;
-        this.from = input;
-        this.to = output;
-        this.selectedTokens = new LinkedList<TokenController>();
-        this.playableTokens = new LinkedList<TokenController>();
+        from = input;
+        to = output;
+        selectedTokens = new LinkedList<TokenController>();
+        playableTokens = new LinkedList<TokenController>();
     }
 
     // returns the currently active player
     public boolean activePlayer() {
-        return this.player.active();
+        return player.active();
     }
 
     // returns the currently active token
-    public void activeToken(ClientView token) {
+    public void activeToken(final ClientView token) {
         this.token = token;
     }
 
     // check whether the players move jumped over an opponents token
-    private void checkJump(TokenController from, TokenController to) {
+    private void checkJump(final TokenController from, final TokenController to) {
 
         if (Math.abs(from.getTokenRow() - to.getTokenRow()) == 2) {
-            int r = (from.getTokenRow() + to.getTokenRow()) / 2;
-            int c = (from.getTokenColumn() + to.getTokenColumn()) / 2;
-            
+            final int r = (from.getTokenRow() + to.getTokenRow()) / 2;
+            final int c = (from.getTokenColumn() + to.getTokenColumn()) / 2;
+
             // empties square with jumped token in
-            TokenController jumpedToken = this.token.getToken((r * 8) + c + 1);
+            final TokenController jumpedToken = token.getToken((r * 8) + c + 1);
             jumpedToken.setPlayerID(0);
             jumpedToken.removeKing();
         }
     }
 
     // check whether the players token has reach kings row and become king
-    private void checkKing(TokenController from, TokenController tokenPlayed) {
+    private void checkKing(final TokenController from, final TokenController tokenPlayed) {
         if (!from.king()) if (tokenPlayed.getTokenRow() != 7 || tokenPlayed.getPlayer() != 1) {
             if (tokenPlayed.getTokenRow() == 0 && tokenPlayed.getPlayer() == 2) tokenPlayed.makeKing();
         } else {
@@ -68,60 +68,60 @@ public class DraughtsController implements Runnable {
     }
 
     // fetches player tokens
-    private void getPlayableTokens(TokenController t) {
-        this.playableTokens.clear();
-        this.playableTokens = this.token.playableToken(t);
-        this.token.play();
+    private void getPlayableTokens(final TokenController t) {
+        playableTokens.clear();
+        playableTokens = token.playableToken(t);
+        token.play();
     }
 
     // allows player to make their move, check if this move is a jump, check whether token has become king, deselect token
-    public void makeMove(TokenController from, TokenController to) {
+    public void makeMove(final TokenController from, final TokenController to) {
         to.setPlayerID(from.getPlayer());
         from.setPlayerID(0);
-        this.checkJump(from, to);
-        this.checkKing(from, to);
-        this.deselectToken();
+        checkJump(from, to);
+        checkKing(from, to);
+        deselectToken();
 
         // ends player's turn
-        this.waitForAction = false;
+        waitForAction = false;
         try {
-            this.sendMove(from, to);
-        } catch (IOException e) {
+            sendMove(from, to);
+        } catch (final IOException e) {
             System.out.println("Unable to make move");
         }
     }
 
     public void run() {
-        this.continuePlay = true;
-        this.waitForAction = true;
-        this.endPlay = false;
+        continuePlay = true;
+        waitForAction = true;
+        endPlay = false;
 
         // player 1 (white) goes first
         try {
-            if (this.player.getPlayer() == 1) {
-                this.from.readInt();
-                this.player.activePlayer(true);
+            if (player.getPlayer() == 1) {
+                from.readInt();
+                player.activePlayer(true);
             }
 
             // while game is in progress allow players to make turns via serverInfo method
-            if (this.continuePlay && !this.endPlay) {
-                do if (this.player.getPlayer() == 1) {
-                    this.waitForPlayerAction();
-                    if (!this.endPlay) {
-                        this.serverInfo();
+            if (continuePlay && !endPlay) {
+                do if (player.getPlayer() == 1) {
+                    waitForPlayerAction();
+                    if (!endPlay) {
+                        serverInfo();
                     }
-                } else if (this.player.getPlayer() == 2) {
-                    this.serverInfo();
-                    if (!this.endPlay) {
-                        this.waitForPlayerAction();
+                } else if (player.getPlayer() == 2) {
+                    serverInfo();
+                    if (!endPlay) {
+                        waitForPlayerAction();
                     }
                 }
-                while (this.continuePlay && !this.endPlay);
+                while (continuePlay && !endPlay);
             }
 
             // if game over display "game over" message and asks player if they'd like to start a new game
-            if (this.endPlay) {
-                int option = JOptionPane.showConfirmDialog(
+            if (endPlay) {
+                final int option = JOptionPane.showConfirmDialog(
                         null,
                         "Game Over, Would you like to play again?",
                         "Game Over",
@@ -129,7 +129,7 @@ public class DraughtsController implements Runnable {
                 // opens two new client windows for each player (can't manage to get it to force close other windows - sorry)
                 if (option != JOptionPane.NO_OPTION) {
                     if (option == JOptionPane.YES_OPTION) {
-                        Client client = new Client();
+                        final Client client = new Client();
                         client.setLocation(300, 0);
                         client.setTitle("English Draughts");
                         client.setSize(450, 450);
@@ -139,86 +139,86 @@ public class DraughtsController implements Runnable {
                     System.exit(0);
                 }
             }
-        } catch(IOException | InterruptedException e){
-                JOptionPane.showMessageDialog(null, "Connection lost");
-                System.exit(0);
+        } catch (final IOException | InterruptedException e) {
+            JOptionPane.showMessageDialog(null, "Connection lost");
+            System.exit(0);
         }
     }
 
     // handles the selection and deselection of tokens
-    private void selected(TokenController t) {
+    private void selected(final TokenController t) {
         t.setSelected(true);
-        this.selectedTokens.add(t);
-        this.getPlayableTokens(t);
+        selectedTokens.add(t);
+        getPlayableTokens(t);
     }
 
     // select token logic
-    public void selectToken(TokenController t) {
-        if (!this.selectedTokens.isEmpty()) {
-            if (this.selectedTokens.size() >= 1)
-                if (!this.playableTokens.contains(t)) {
-                this.deselectToken();
-                this.selected(t);
-            } else {
-                this.makeMove(this.selectedTokens.getFirst(), t);
-            }
+    public void selectToken(final TokenController t) {
+        if (!selectedTokens.isEmpty()) {
+            if (selectedTokens.size() >= 1)
+                if (!playableTokens.contains(t)) {
+                    deselectToken();
+                    selected(t);
+                } else {
+                    makeMove(selectedTokens.getFirst(), t);
+                }
         } else {
-            this.selected(t);
+            selected(t);
         }
     }
 
     // deselect token logic
     public void deselectToken() {
-        for (TokenController token : this.selectedTokens) token.setSelected(false);
-        this.selectedTokens.clear();
-        for (TokenController token : this.playableTokens) token.moveable(false);
-        this.playableTokens.clear();
-        this.token.play();
+        for (final TokenController token : selectedTokens) token.setSelected(false);
+        selectedTokens.clear();
+        for (final TokenController token : playableTokens) token.moveable(false);
+        playableTokens.clear();
+        token.play();
     }
 
     // fetches and sends player moves
-    private void sendMove(TokenController from, TokenController to) throws IOException {
+    private void sendMove(final TokenController from, final TokenController to) throws IOException {
         this.to.writeInt(from.getTokenID());
         this.to.writeInt(to.getTokenID());
     }
 
     // passes turn information to and from ending the game when winner/loser
     private void serverInfo() throws IOException {
-        this.player.activePlayer(false);
+        player.activePlayer(false);
         int from = this.from.readInt();
         if (from != 0) {
             if (from == 1) {
-                this.endPlay = true;
-                this.continuePlay = false;
+                endPlay = true;
+                continuePlay = false;
             } else {
-                int to = this.from.readInt();
-                this.update(from, to);
+                final int to = this.from.readInt();
+                update(from, to);
             }
         } else {
             from = this.from.readInt();
-            int to = this.from.readInt();
-            this.update(from, to);
-            this.endPlay = true;
+            final int to = this.from.readInt();
+            update(from, to);
+            endPlay = true;
         }
     }
 
     // updates game board
-    private void update(int from, int to) {
-        TokenController fromToken = this.token.getToken(from);
-        TokenController toToken = this.token.getToken(to);
+    private void update(final int from, final int to) {
+        final TokenController fromToken = token.getToken(from);
+        final TokenController toToken = token.getToken(to);
         toToken.setPlayerID(fromToken.getPlayer());
         fromToken.setPlayerID(0);
-        this.checkJump(fromToken, toToken);
-        this.checkKing(fromToken, toToken);
-        this.token.play();
+        checkJump(fromToken, toToken);
+        checkKing(fromToken, toToken);
+        token.play();
     }
 
     // sends thread to sleep while waiting for player action
     private void waitForPlayerAction() throws InterruptedException {
-        this.player.activePlayer(true);
-        while (this.waitForAction) {
+        player.activePlayer(true);
+        while (waitForAction) {
             Thread.sleep(100);
         }
-        this.waitForAction = true;
+        waitForAction = true;
     }
 }

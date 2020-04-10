@@ -17,18 +17,18 @@ public class PlayerModel {
 
     // constructor
     public PlayerModel() {
-        this.activePlayer(false);
+        activePlayer(false);
     }
 
     // creates the socket and connects players
-    public PlayerModel(Socket socket) {
+    public PlayerModel(final Socket socket) {
         this.socket = socket;
 
         try {
-            this.input = new DataInputStream(this.socket.getInputStream());
-            this.output = new DataOutputStream(this.socket.getOutputStream());
+            input = new DataInputStream(this.socket.getInputStream());
+            output = new DataOutputStream(this.socket.getOutputStream());
 
-        } catch (IOException e) {
+        } catch (final IOException e) {
             JOptionPane.showMessageDialog(null, "Unable to connect player");
             System.exit(0);
         }
@@ -36,19 +36,19 @@ public class PlayerModel {
 
     // handles player turns
     public boolean active() {
-        return this.currentTurn;
+        return currentTurn;
     }
 
     // handles player connections
     public boolean connected() {
-        return this.socket.isConnected();
+        return socket.isConnected();
     }
 
     // closes the connection
     public void closeConnection() {
         try {
-            this.socket.close();
-        } catch (IOException e) {
+            socket.close();
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }
@@ -57,18 +57,18 @@ public class PlayerModel {
     public int getInput() {
         int i = 0;
         try {
-            i = this.input.readInt();
+            i = input.readInt();
             return i;
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
         return i;
     }
 
-    public int getOutput(int i) {
+    public int getOutput(final int i) {
         try {
-            this.output.writeInt(i);
-        } catch (IOException e) {
+            output.writeInt(i);
+        } catch (final IOException e) {
             e.printStackTrace();
         }
         return i;
@@ -76,16 +76,16 @@ public class PlayerModel {
 
     // fetches current player
     public int getPlayer() {
-        return this.player;
+        return player;
     }
 
     // sets this player as the active player
-    public void setPlayer(int player) {
+    public void setPlayer(final int player) {
         this.player = player;
         PlayerID.PlayerID.setVariable(player);
     }
 
-    public void activePlayer(boolean currentTurn) {
+    public void activePlayer(final boolean currentTurn) {
         this.currentTurn = currentTurn;
     }
 }

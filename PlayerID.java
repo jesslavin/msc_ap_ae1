@@ -6,16 +6,16 @@ public enum PlayerID {
 
     private int ID;
 
-    PlayerID(int ID) {
-        this.setVariable(ID);
+    PlayerID(final int ID) {
+        setVariable(ID);
     }
 
     public int getVariable() {
-        return this.ID;
+        return ID;
     }
 
-    public void setVariable(int PlayerID) {
-        this.ID = PlayerID;
+    public void setVariable(final int PlayerID) {
+        ID = PlayerID;
     }
 
 }

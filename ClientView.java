@@ -7,48 +7,48 @@ import java.util.LinkedList;
 public class ClientView extends JPanel {
 
     // instance variables
-    private Dimension window = new Dimension(720, 720);
-    private BoardModel board;
-    private MouseListener listener;
-    private LinkedList<BoardView> token;
-    private TokenController[][] tokens;
+    private final Dimension window = new Dimension(720, 720);
+    private final BoardModel board;
+    private final MouseListener listener;
+    private final LinkedList<BoardView> token;
+    private final TokenController[][] tokens;
 
     // constructor
-    public ClientView(MouseListener listener) {
-        this.setPreferredSize(this.window);
-        this.setLayout(new GridLayout(8, 8));
-        this.board = new BoardModel();
+    public ClientView(final MouseListener listener) {
+        setPreferredSize(window);
+        setLayout(new GridLayout(8, 8));
+        board = new BoardModel();
         this.listener = listener;
-        this.token = new LinkedList<>();
-        this.tokens = this.board.getTokens();
-        this.build();
+        token = new LinkedList<>();
+        tokens = board.getTokens();
+        build();
     }
 
     // builds the draughts board
     private void build() {
         for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++) {
-                BoardView token = new BoardView(this.tokens[i][j]);
+                final BoardView token = new BoardView(tokens[i][j]);
                 if (!token.getToken().moveable() && token.getToken().getPlayer() != PlayerID.PlayerID.getVariable()) {
                 } else {
-                    token.addMouseListener(this.listener);
+                    token.addMouseListener(listener);
                 }
                 this.token.add(token);
-                this.add(token);
+                add(token);
             }
     }
 
-    public TokenController getToken(int t) {
-        return this.token.get(t - 1).getToken();
+    public TokenController getToken(final int t) {
+        return token.get(t - 1).getToken();
     }
 
     // implements the board
     public void play() {
-        for (BoardView token : this.token) token.getListener(this.listener);
-        this.repaint();
+        for (final BoardView token : token) token.getListener(listener);
+        repaint();
     }
 
-    public LinkedList<TokenController> playableToken(TokenController token) {
-        return this.board.playableTokens(token);
+    public LinkedList<TokenController> playableToken(final TokenController token) {
+        return board.playableTokens(token);
     }
 }

@@ -4,10 +4,10 @@ import javax.swing.*;
 
 public class Server {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
         // creates a new server window
-        ServerView server = new ServerView();
+        final ServerView server = new ServerView();
 
         // sets the size, location and visibly of server window
         server.setLocation(0, 0);
