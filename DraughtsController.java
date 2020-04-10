@@ -42,10 +42,11 @@ public class DraughtsController implements Runnable {
 
     // check whether the players move jumped over an opponents token
     private void checkJump(TokenController from, TokenController to) {
+
         if (Math.abs(from.getTokenRow() - to.getTokenRow()) == 2) {
             int r = (from.getTokenRow() + to.getTokenRow()) / 2;
             int c = (from.getTokenColumn() + to.getTokenColumn()) / 2;
-
+            
             // empties square with jumped token in
             TokenController jumpedToken = this.token.getToken((r * 8) + c + 1);
             jumpedToken.setPlayerID(0);
