@@ -4,17 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.LinkedList;
 
-public class ClientView extends JPanel {
+public class AClientView extends JPanel {
 
     // instance variables
     private Dimension window = new Dimension(720, 720);
     private BoardModel board;
     private AMouseListener listener;
-    private LinkedList<BoardView> token;
+    private LinkedList<ABoardView> token;
     private TokenController[][] tokens;
 
     // constructor
-    public ClientView(AMouseListener listener) {
+    public AClientView(AMouseListener listener) {
         this.setPreferredSize(this.window);
         this.setLayout(new GridLayout(8, 8));
         this.board = new BoardModel();
@@ -28,12 +28,12 @@ public class ClientView extends JPanel {
     private void build() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                BoardView square = new BoardView(this.tokens[i][j]);
-                if (square.getToken().moveable() || square.getToken().getPlayer() == APlayerID.PlayerID.getVariable()) {
-                    square.addMouseListener(this.listener);
+                ABoardView token = new ABoardView(this.tokens[i][j]);
+                if (token.getToken().moveable() || token.getToken().getPlayer() == APlayerID.PlayerID.getVariable()) {
+                    token.addMouseListener(this.listener);
                 }
-                this.token.add(square);
-                this.add(square);
+                this.token.add(token);
+                this.add(token);
             }
         }
     }
@@ -43,7 +43,7 @@ public class ClientView extends JPanel {
     }
 
     public void play() {
-        for (BoardView token : this.token) {
+        for (ABoardView token : this.token) {
             token.setListener(this.listener);
         }
         this.repaint();

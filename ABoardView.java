@@ -5,14 +5,14 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class BoardView extends JPanel {
+public class ABoardView extends JPanel {
 
     private TokenController token;
     private boolean hover;
     private MouseHandler handler;
 
     // Constructor
-    public BoardView(TokenController token) {
+    public ABoardView(TokenController token) {
         this.token = token;
         this.hover = false;
         this.handler = new MouseHandler();
@@ -39,10 +39,10 @@ public class BoardView extends JPanel {
         super.paintComponents(gameGraphics);
 
         // creates a pink checkerboard
-        if (this.token.present()) {
-            gameGraphics.setColor(Color.PINK);
-        } else {
+        if (!this.token.present()) {
             gameGraphics.setColor(Color.WHITE);
+        } else {
+            gameGraphics.setColor(Color.PINK);
         }
         gameGraphics.fillRect(0, 0, this.getWidth(), this.getHeight());
 
@@ -99,14 +99,14 @@ public class BoardView extends JPanel {
 
         public void mouseEntered(MouseEvent e) {
             super.mouseEntered(e);
-            BoardView.this.hover = true;
-            BoardView.this.repaint();
+            ABoardView.this.hover = true;
+            ABoardView.this.repaint();
         }
 
         public void mouseExited(MouseEvent e) {
             super.mouseExited(e);
-            BoardView.this.hover = false;
-            BoardView.this.repaint();
+            ABoardView.this.hover = false;
+            ABoardView.this.repaint();
         }
 
     }

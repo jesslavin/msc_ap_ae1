@@ -10,7 +10,7 @@ public class AClient extends JFrame {
 
     // instance variables
     private PlayerModel player;
-    private ClientView draughtsBoard;
+    private AClientView draughtsBoard;
     private String server;
     private int port;
     private Socket socket;
@@ -41,7 +41,7 @@ public class AClient extends JFrame {
         listener.newController(c);
 
         // Sets up a new draughts board and with a mouse listener
-        this.draughtsBoard = new ClientView(listener);
+        this.draughtsBoard = new AClientView(listener);
         c.activeToken(this.draughtsBoard);
         this.add(this.draughtsBoard);
     }

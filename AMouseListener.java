@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 public class AMouseListener extends MouseAdapter {
 
     // instance variables
-    private BoardView token;
+    private ABoardView token;
     private DraughtsController controller;
 
     public void newController(DraughtsController c) {
@@ -31,7 +31,7 @@ public class AMouseListener extends MouseAdapter {
     // Event called upon by mouse click, selects and deselects tokens
     private void selectToken(MouseEvent event) {
         try {
-            this.token = (BoardView) event.getSource();
+            this.token = (ABoardView) event.getSource();
             TokenController t = this.token.getToken();
             // if token is already selected - deselect
             if (t.isSelected()) {
