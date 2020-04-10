@@ -62,12 +62,12 @@ public class TokenController {
         king = true;
     }
 
-    public boolean moveable() {
+    public boolean movable() {
         return movable;
     }
 
-    public void moveable(final boolean moveable) {
-        movable = moveable;
+    public void legalMove(final boolean movable) {
+        this.movable = movable;
     }
 
     public boolean opponent() {

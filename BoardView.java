@@ -82,7 +82,7 @@ public class BoardView extends JPanel {
 
     // implements mouse listener
     public void getListener() {
-        if (!token.moveable() && token.getPlayer() != PlayerID.PlayerID.getVariable()) {
+        if (!token.movable() && token.getPlayer() != PlayerID.PlayerID.getVariable()) {
             removeMouseListener(handler);
         } else {
             removeMouseListener(handler);
@@ -91,7 +91,7 @@ public class BoardView extends JPanel {
     }
 
     public void getListener(final MouseListener mouseListener) {
-        if (!token.moveable() && token.getPlayer() != PlayerID.PlayerID.getVariable()) {
+        if (!token.movable() && token.getPlayer() != PlayerID.PlayerID.getVariable()) {
             removeMouseListener(mouseListener);
         } else {
             removeMouseListener(mouseListener);

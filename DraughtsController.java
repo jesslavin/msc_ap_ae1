@@ -171,7 +171,7 @@ public class DraughtsController implements Runnable {
     public void deselectToken() {
         for (final TokenController token : selectedTokens) token.setSelected(false);
         selectedTokens.clear();
-        for (final TokenController token : playableTokens) token.moveable(false);
+        for (final TokenController token : playableTokens) token.legalMove(false);
         playableTokens.clear();
         token.play();
     }

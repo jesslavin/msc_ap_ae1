@@ -76,6 +76,7 @@ public class BoardModel {
     // frontTokens, jump, opponentPresent and playableTokens check if the selected token can be moved and how it can be moved
     // multiple jump functionality unfulfilled
     // force jump functionality unfulfilled
+    // draw functionality unfulfilled, if a player cannot make any legal moves can gets stuck on their turn
     // unhappy with final logic, feels bulky
 
     private void frontTokens(final LinkedList<TokenController> tokens, final int movable, final int selectedColumn) {
@@ -87,7 +88,7 @@ public class BoardModel {
         } else {
             final TokenController right = this.tokens[movable][selectedColumn + 1];
             if (right.getPlayer() == 0) {
-                right.moveable(true);
+                right.legalMove(true);
                 tokens.add(right);
             }
         }
@@ -95,7 +96,7 @@ public class BoardModel {
         if (selectedColumn <= 0 || selectedColumn > 8) return;
         final TokenController left = this.tokens[movable][selectedColumn - 1];
         if (left.getPlayer() != 0) return;
-        left.moveable(true);
+        left.legalMove(true);
         tokens.add(left);
     }
 
@@ -112,7 +113,7 @@ public class BoardModel {
             final TokenController right = this.tokens[movable][selectedColumn + 2];
             column = (selectedColumn + selectedColumn + 2) / 2;
             if (right.getPlayer() == 0 && opponentPresent(row, column)) {
-                right.moveable(true);
+                right.legalMove(true);
                 tokens.add(right);
             }
         }
@@ -123,7 +124,7 @@ public class BoardModel {
         final TokenController left = this.tokens[movable][selectedColumn - 2];
         column = (selectedColumn + selectedColumn - 2) / 2;
         if (left.getPlayer() == 0 && opponentPresent(row, column)) {
-            left.moveable(true);
+            left.legalMove(true);
             tokens.add(left);
         }
     }

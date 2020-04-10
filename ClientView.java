@@ -29,7 +29,7 @@ public class ClientView extends JPanel {
         for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++) {
                 final BoardView token = new BoardView(tokens[i][j]);
-                if (!token.getToken().moveable() && token.getToken().getPlayer() != PlayerID.PlayerID.getVariable()) {
+                if (!token.getToken().movable() && token.getToken().getPlayer() != PlayerID.PlayerID.getVariable()) {
                 } else {
                     token.addMouseListener(listener);
                 }
