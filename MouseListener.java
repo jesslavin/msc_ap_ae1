@@ -18,10 +18,10 @@ public class MouseListener extends MouseAdapter {
         super.mousePressed(event);
         // If it a player's current turn let them select a token, else display wait for other player message
         try {
-            if (this.controller.activePlayer()) {
-                this.selectToken(event);
+            if (!this.controller.activePlayer()) {
+                JOptionPane.showMessageDialog(null, "Not your turn, please wait for opponents move");
             } else {
-                JOptionPane.showMessageDialog(null, "Waiting for other player...");
+                this.selectToken(event);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -34,12 +34,12 @@ public class MouseListener extends MouseAdapter {
             this.token = (BoardView) event.getSource();
             TokenController t = this.token.getToken();
             // if token is already selected - deselect
-            if (t.isSelected()) {
-                this.controller.deselectToken();
+            if (!t.isSelected()) {
+                this.controller.selectToken(t);
             }
             // else select
             else {
-                this.controller.selectToken(t);
+                this.controller.deselectToken();
             }
         } catch (Exception e) {
             e.printStackTrace();

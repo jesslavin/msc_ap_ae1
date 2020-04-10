@@ -42,9 +42,8 @@ public class BoardView extends JPanel {
         super.paintComponents(gameGraphics);
 
         // creates a pink checkerboard
-        if (this.token.present()) {
-            gameGraphics.setColor(Color.PINK);
-        } else {
+        if (this.token.present()) gameGraphics.setColor(Color.PINK);
+        else {
             gameGraphics.setColor(Color.WHITE);
         }
         gameGraphics.fillRect(0, 0, this.getWidth(), this.getHeight());
@@ -52,53 +51,51 @@ public class BoardView extends JPanel {
         // fills in token colours for each player
         int playerID = this.token.getPlayer();
         // changes to red if clicked
-        if (!this.isSelected()) {
-            if (playerID == 1 || playerID == 2) {
-                // changes to red if hovered over
-                if (!this.hover) {
-                    // otherwise set to player token colour
-                    switch (playerID) {
-                        case 1:  // player with ID 1 is white
-                            gameGraphics.setColor(Color.WHITE);
-                            break;
-                        case 2:  // player with ID 2 is black
-                            gameGraphics.setColor(Color.BLACK);
-                            break;
-                    }
-                } else {
-                    gameGraphics.setColor(Color.RED);
-                }
-                this.paint(gameGraphics);
-            }
-        } else {
+        if (this.isSelected()) {
             gameGraphics.setColor(Color.RED);
+            this.paint(gameGraphics);
+        } else if (playerID == 1 || playerID == 2) {
+            // changes to red if hovered over
+            if (this.hover) gameGraphics.setColor(Color.RED);
+            else {
+                // otherwise set to player token colour
+                switch (playerID) {
+                    case 1:  // player with ID 1 is white
+                        gameGraphics.setColor(Color.WHITE);
+                        break;
+                    case 2:  // player with ID 2 is black
+                        gameGraphics.setColor(Color.BLACK);
+                        break;
+                }
+            }
             this.paint(gameGraphics);
         }
 
         // additional graphics for king tokens
-        if (this.token.king() && this.token.present()) {
-            gameGraphics.setFont(new Font("Georgia", Font.BOLD, 20));
-            gameGraphics.setColor(Color.PINK);
-            gameGraphics.drawString("K", this.getWidth() / 2 - 8, this.getHeight() / 2 + 8);
+        if (!this.token.king() || !this.token.present()) {
+            return;
         }
+        gameGraphics.setFont(new Font("Georgia", Font.BOLD, 20));
+        gameGraphics.setColor(Color.PINK);
+        gameGraphics.drawString("K", this.getWidth() / 2 - 8, this.getHeight() / 2 + 8);
     }
 
     // implements mouse listener
     public void getListener() {
-        if (this.token.moveable() || this.token.getPlayer() == PlayerID.PlayerID.getVariable()) {
+        if (!this.token.moveable() && this.token.getPlayer() != PlayerID.PlayerID.getVariable()) {
             this.removeMouseListener(this.handler);
-            this.addMouseListener(this.handler);
         } else {
             this.removeMouseListener(this.handler);
+            this.addMouseListener(this.handler);
         }
     }
 
     public void getListener(MouseListener mouseListener) {
-        if (this.token.moveable() || this.token.getPlayer() == PlayerID.PlayerID.getVariable()) {
+        if (!this.token.moveable() && this.token.getPlayer() != PlayerID.PlayerID.getVariable()) {
             this.removeMouseListener(mouseListener);
-            this.addMouseListener(mouseListener);
         } else {
             this.removeMouseListener(mouseListener);
+            this.addMouseListener(mouseListener);
         }
     }
 

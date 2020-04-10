@@ -81,7 +81,8 @@ public class ServerView extends JFrame {
                                 this.updateBoard(from, to);
 
                                 // send this data to player two
-                                if (this.draughts.endPlay()) {
+                                if (!this.draughts.endPlay()) {
+                                } else {
                                     // notifies game is over
                                     this.black.getOutput(0);
                                 }
@@ -89,47 +90,43 @@ public class ServerView extends JFrame {
                                 int send = this.black.getOutput(to);
                                 this.pass(get, send);
 
-                                // if game is over, break out
-                                if (this.draughts.endPlay()) {
+                                if (!this.draughts.endPlay()) {
+                                    // wait for player two to make their move
+                                    from = this.black.getInput();
+                                    to = this.black.getInput();
+                                    // update board accordingly
+                                    this.pass(from, to);
+                                    this.updateBoard(from, to);
+
+                                    // send this data to player one
+                                    if (this.draughts.endPlay()) {
+                                        // notifies game is over
+                                        this.white.getOutput(0);
+                                    }
+                                    get = this.white.getOutput(from);
+                                    send = this.white.getOutput(to);
+                                    this.pass(get, send);
+
+                                    // if game is over, break out
+                                    if (this.draughts.endPlay()) {
+                                        this.black.getOutput(1);
+                                        this.continuePlay = false;
+                                        break;
+                                    }
+                                } else {
                                     this.white.getOutput(1);
                                     this.continuePlay = false;
                                     break;
                                 }
 
-                                // wait for player two to make their move
-                                from = this.black.getInput();
-                                to = this.black.getInput();
-                                // update board accordingly
-                                this.pass(from, to);
-                                this.updateBoard(from, to);
-
-                                // send this data to player one
-                                if (this.draughts.endPlay()) {
-                                    // notifies game is over
-                                    this.white.getOutput(0);
-                                }
-                                get = this.white.getOutput(from);
-                                send = this.white.getOutput(to);
-                                this.pass(get, send);
-
-                                // if game is over, break out
-                                if (this.draughts.endPlay()) {
-                                    this.black.getOutput(1);
-                                    this.continuePlay = false;
-                                    break;
-                                }
                             }
 
                         } catch (Exception e) {
                             System.out.println("Connection closed");
 
-                            if (this.white.connected()) {
-                                this.white.closeConnection();
-                            }
+                            if (this.white.connected()) this.white.closeConnection();
 
-                            if (this.black.connected()) {
-                                this.black.closeConnection();
-                            }
+                            if (this.black.connected()) this.black.closeConnection();
 
                             return;
                         }

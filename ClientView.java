@@ -26,16 +26,16 @@ public class ClientView extends JPanel {
 
     // builds the draughts board
     private void build() {
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++) {
                 BoardView token = new BoardView(this.tokens[i][j]);
-                if (token.getToken().moveable() || token.getToken().getPlayer() == PlayerID.PlayerID.getVariable()) {
+                if (!token.getToken().moveable() && token.getToken().getPlayer() != PlayerID.PlayerID.getVariable()) {
+                } else {
                     token.addMouseListener(this.listener);
                 }
                 this.token.add(token);
                 this.add(token);
             }
-        }
     }
 
     public TokenController getToken(int t) {
@@ -44,9 +44,7 @@ public class ClientView extends JPanel {
 
     // implements the board
     public void play() {
-        for (BoardView token : this.token) {
-            token.getListener(this.listener);
-        }
+        for (BoardView token : this.token) token.getListener(this.listener);
         this.repaint();
     }
 

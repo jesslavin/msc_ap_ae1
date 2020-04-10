@@ -55,24 +55,21 @@ public class DraughtsController implements Runnable {
 
     // check whether the players token has reach kings row and become king
     private void checkKing(TokenController from, TokenController tokenPlayed) {
-        if (from.king()) {
+        if (!from.king()) if (tokenPlayed.getTokenRow() != 7 || tokenPlayed.getPlayer() != 1) {
+            if (tokenPlayed.getTokenRow() == 0 && tokenPlayed.getPlayer() == 2) tokenPlayed.makeKing();
+        } else {
+            tokenPlayed.makeKing();
+        }
+        else {
             tokenPlayed.makeKing();
             from.removeKing();
-        } else if (tokenPlayed.getTokenRow() == 7 && tokenPlayed.getPlayer() == 1) {
-            tokenPlayed.makeKing();
-        } else if (tokenPlayed.getTokenRow() == 0 && tokenPlayed.getPlayer() == 2) {
-            tokenPlayed.makeKing();
         }
     }
 
     public void deselectToken() {
-        for (TokenController token : this.selectedTokens) {
-            token.setSelected(false);
-        }
+        for (TokenController token : this.selectedTokens) token.setSelected(false);
         this.selectedTokens.clear();
-        for (TokenController token : this.playableTokens) {
-            token.moveable(false);
-        }
+        for (TokenController token : this.playableTokens) token.moveable(false);
         this.playableTokens.clear();
         this.token.play();
     }
@@ -113,8 +110,8 @@ public class DraughtsController implements Runnable {
             }
 
             // while game is in progress allow players to make turns via serverInfo method
-            while (this.continuePlay && !this.endPlay) {
-                if (this.player.getPlayer() == 1) {
+            if (this.continuePlay && !this.endPlay) {
+                do if (this.player.getPlayer() == 1) {
                     this.waitForPlayerAction();
                     if (!this.endPlay) {
                         this.serverInfo();
@@ -125,6 +122,7 @@ public class DraughtsController implements Runnable {
                         this.waitForPlayerAction();
                     }
                 }
+                while (this.continuePlay && !this.endPlay);
             }
 
             // if game over display "game over" message and asks player if they'd like to start a new game
@@ -134,16 +132,17 @@ public class DraughtsController implements Runnable {
                         "Game Over, Would you like to play again?",
                         "Game Over",
                         JOptionPane.YES_NO_OPTION);
-                // exits program
-                if (option == JOptionPane.NO_OPTION) {
+                // opens two new client windows for each player (can't manage to get it to force close other windows - sorry)
+                if (option != JOptionPane.NO_OPTION) {
+                    if (option == JOptionPane.YES_OPTION) {
+                        Client client = new Client();
+                        client.setLocation(300, 0);
+                        client.setTitle("English Draughts");
+                        client.setSize(450, 450);
+                        client.setVisible(true);
+                    }
+                } else {
                     System.exit(0);
-                    // opens two new client windows for each player (can't manage to get it to force close other windows)
-                } else if (option == JOptionPane.YES_OPTION) {
-                    Client client = new Client();
-                    client.setLocation(300, 0);
-                    client.setTitle("English Draughts");
-                    client.setSize(450, 450);
-                    client.setVisible(true);
                 }
             }
         } catch(IOException | InterruptedException e){
@@ -152,7 +151,7 @@ public class DraughtsController implements Runnable {
         }
     }
 
-        // handles the selection and deselection of tokens
+    // handles the selection and deselection of tokens
     private void selected(TokenController t) {
         t.setSelected(true);
         this.selectedTokens.add(t);
@@ -160,15 +159,16 @@ public class DraughtsController implements Runnable {
     }
 
     public void selectToken(TokenController t) {
-        if (this.selectedTokens.isEmpty()) {
-            this.selected(t);
-        } else if (this.selectedTokens.size() >= 1) {
-            if (this.playableTokens.contains(t)) {
-                this.makeMove(this.selectedTokens.getFirst(), t);
-            } else {
+        if (!this.selectedTokens.isEmpty()) {
+            if (this.selectedTokens.size() >= 1)
+                if (!this.playableTokens.contains(t)) {
                 this.deselectToken();
                 this.selected(t);
+            } else {
+                this.makeMove(this.selectedTokens.getFirst(), t);
             }
+        } else {
+            this.selected(t);
         }
     }
 
@@ -182,17 +182,19 @@ public class DraughtsController implements Runnable {
     private void serverInfo() throws IOException {
         this.player.activePlayer(false);
         int from = this.from.readInt();
-        if (from == 0) {
+        if (from != 0) {
+            if (from == 1) {
+                this.endPlay = true;
+                this.continuePlay = false;
+            } else {
+                int to = this.from.readInt();
+                this.update(from, to);
+            }
+        } else {
             from = this.from.readInt();
             int to = this.from.readInt();
             this.update(from, to);
             this.endPlay = true;
-        } else if (from == 1) {
-            this.endPlay = true;
-            this.continuePlay = false;
-        } else {
-            int to = this.from.readInt();
-            this.update(from, to);
         }
     }
 
