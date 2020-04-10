@@ -1,12 +1,12 @@
 // Jessica Lavin - 2495543L
 
-public enum APlayerID {
+public enum PlayerID {
 
     PlayerID(0);
 
     private int ID;
 
-    APlayerID(int ID) {
+    PlayerID(int ID) {
         this.setVariable(ID);
     }
 

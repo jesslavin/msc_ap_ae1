@@ -6,7 +6,7 @@ import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class AServerView extends JFrame {
+public class ServerView extends JFrame {
 
     // create frame components
     private JPanel jPanel;
@@ -16,7 +16,7 @@ public class AServerView extends JFrame {
     private ServerSocket socket;
 
     // formats elements and adds them to server window
-    public AServerView() {
+    public ServerView() {
         this.jPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         this.textArea = new JTextArea();
         this.jPanel.setBackground(Color.BLACK);
@@ -29,7 +29,7 @@ public class AServerView extends JFrame {
     // establishes a connection and waits for clients to join
     public void start() {
         try {
-            int port = AConfiguration.getPort();
+            int port = Configuration.getPort();
 
             // creates a new server socket
             this.socket = new ServerSocket(port);

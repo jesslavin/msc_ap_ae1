@@ -4,10 +4,10 @@ import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class AMouseListener extends MouseAdapter {
+public class MouseListener extends MouseAdapter {
 
     // instance variables
-    private ABoardView token;
+    private BoardView token;
     private DraughtsController controller;
 
     public void newController(DraughtsController c) {
@@ -31,7 +31,7 @@ public class AMouseListener extends MouseAdapter {
     // Event called upon by mouse click, selects and deselects tokens
     private void selectToken(MouseEvent event) {
         try {
-            this.token = (ABoardView) event.getSource();
+            this.token = (BoardView) event.getSource();
             TokenController t = this.token.getToken();
             // if token is already selected - deselect
             if (t.isSelected()) {

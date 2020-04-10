@@ -1,6 +1,6 @@
 // Jessica Lavin - 2495543L
 
-public class AConfiguration {
+public class Configuration {
 
     // returns the port set by the config file
     public static int getPort() {

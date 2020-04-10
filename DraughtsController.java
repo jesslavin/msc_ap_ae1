@@ -16,7 +16,7 @@ public class DraughtsController implements Runnable {
     private boolean endPlay;
     private DataInputStream from;
     private DataOutputStream to;
-    private AClientView token;
+    private ClientView token;
     private PlayerModel player;
     private LinkedList<TokenController> selectedTokens;
     private LinkedList<TokenController> playableTokens;
@@ -36,7 +36,7 @@ public class DraughtsController implements Runnable {
     }
 
     // returns the currently active token
-    public void activeToken(AClientView token) {
+    public void activeToken(ClientView token) {
         this.token = token;
     }
 
@@ -127,19 +127,32 @@ public class DraughtsController implements Runnable {
                 }
             }
 
-            // if game over display "game over" message
+            // if game over display "game over" message and asks player if they'd like to start a new game
             if (this.endPlay) {
-                JOptionPane.showMessageDialog(null, "Game over");
-                System.exit(0);
+                int option = JOptionPane.showConfirmDialog(
+                        null,
+                        "Game Over, Would you like to play again?",
+                        "Game Over",
+                        JOptionPane.YES_NO_OPTION);
+                // exits program
+                if (option == JOptionPane.NO_OPTION) {
+                    System.exit(0);
+                    // opens two new client windows for each player (can't manage to get it to force close other windows)
+                } else if (option == JOptionPane.YES_OPTION) {
+                    Client client = new Client();
+                    client.setLocation(300, 0);
+                    client.setTitle("English Draughts");
+                    client.setSize(450, 450);
+                    client.setVisible(true);
+                }
             }
-
-        } catch (IOException | InterruptedException e) {
-            JOptionPane.showMessageDialog(null, "Connection lost");
-            System.exit(0);
+        } catch(IOException | InterruptedException e){
+                JOptionPane.showMessageDialog(null, "Connection lost");
+                System.exit(0);
         }
     }
 
-    // handles the selection and deselection of tokens
+        // handles the selection and deselection of tokens
     private void selected(TokenController t) {
         t.setSelected(true);
         this.selectedTokens.add(t);

@@ -2,12 +2,12 @@
 
 import javax.swing.*;
 
-public class AServer {
+public class Server {
 
     public static void main(String[] args) {
 
         // creates a new server window
-        AServerView server = new AServerView();
+        ServerView server = new ServerView();
 
         // sets the size, location and visibly of server window
         server.setLocation(0, 0);

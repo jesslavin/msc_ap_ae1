@@ -15,24 +15,20 @@ public class BoardModel {
     private void assignTokens() {
 
         // player one gets rows 0-2
-        for (int r = 0; r < 3; r++) {
-            // columns
-            for (int c = 0; c < 8; c++) {
+        // columns
+        for (int r = 0; r < 3; r++)
+            for (int c = 0; c < 8; c++)
                 if (this.tokens[r][c].present()) {
                     this.tokens[r][c].setPlayerID(1);
                 }
-            }
-        }
 
         // player two gets rows 5-7
-        for (int r = 5; r < 8; r++) {
-            // columns
-            for (int c = 0; c < 8; c++) {
+        // columns
+        for (int r = 5; r < 8; r++)
+            for (int c = 0; c < 8; c++)
                 if (this.tokens[r][c].present()) {
                     this.tokens[r][c].setPlayerID(2);
                 }
-            }
-        }
     }
 
     // ends the game
@@ -40,17 +36,11 @@ public class BoardModel {
 
         int white = 0;
         int black = 0;
-        for (int r = 0; r < 8; r++) {
+        for (int r = 0; r < 8; r++)
             for (int c = 0; c < 8; c++) {
-                if (this.tokens[r][c].getPlayer() == 1) {
-                    white++;
-                }
-
-                if (this.tokens[r][c].getPlayer() == 2) {
-                    black++;
-                }
+                if (this.tokens[r][c].getPlayer() == 1) white++;
+                if (this.tokens[r][c].getPlayer() == 2) black++;
             }
-        }
 
         return white == 0 || black == 0;
     }
@@ -132,16 +122,20 @@ public class BoardModel {
         int selectedRow = selectedToken.getTokenRow();
         int selectedColumn = selectedToken.getTokenColumn();
 
-        int movable = (selectedToken.getPlayer() == 1) ? selectedRow + 1 : selectedRow - 1;
+        int movable;
+        if (selectedToken.getPlayer() == 1) movable = selectedRow + 1;
+        else movable = selectedRow - 1;
 
         this.frontTokens(playableTokens, movable, selectedColumn);
-        this.jump(playableTokens, (selectedToken.getPlayer() == 1) ? movable + 1 : movable - 1, selectedColumn,
+        if (selectedToken.getPlayer() == 1) this.jump(playableTokens, movable + 1, selectedColumn,
+                movable);
+        else this.jump(playableTokens, movable - 1, selectedColumn,
                 movable);
         if (selectedToken.king()) {
-            movable = (selectedToken.getPlayer() == 1) ? selectedRow - 1 : selectedRow + 1;
+            if (selectedToken.getPlayer() == 1) movable = selectedRow - 1;
+            else movable = selectedRow + 1;
             this.frontTokens(playableTokens, movable, selectedColumn);
-            this.jump(playableTokens, (selectedToken.getPlayer() == 1) ? movable - 1 : movable + 1, selectedColumn,
-                    movable);
+            this.jump(playableTokens, (selectedToken.getPlayer() == 1) ? movable - 1 : movable + 1, selectedColumn, movable);
         }
         return playableTokens;
     }
